@@ -120,3 +120,7 @@ export PS1='${debian_chroot:+($debian_chroot)}\[\033[48;5;77m\]\u@\h\[\033[00m\]
 set -o noclobber
 set bell-style none
 export GPG_TTY=$(tty)
+xrdb ~/.Xresources
+
+alias dotfiles='git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
+
