@@ -191,6 +191,6 @@ bindsym $mod+o exec i3lock --image=/usr/share/backgrounds/gnome/Terraform-green.
 #exec --no-startup-id /opt/batnot/batnot
 
 # windows lock
-#exec --no-startup-id xautolock -time 5 -locker 'i3lock -p win -i /home/gabi/Pictures/win98.png'
+#exec --no-startup-id xautolock -time 5 -locker 'i3lock -p win -i $HOME/Pictures/win98.png'
 
 exec --no-startup-id xrdb ~/.Xresources
