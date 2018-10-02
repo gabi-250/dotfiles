@@ -56,7 +56,9 @@ Plug 'edkolev/tmuxline.vim'
 Plug 'tacahiroy/ctrlp-funky' " Search for functions in the current file
 Plug 'scrooloose/nerdcommenter' " Comment / uncomment blocks
 Plug 'vim-scripts/mako.vim' " Mako plugins
+Plug 'craigemery/vim-autotag'
 "Plug 'Valloric/YouCompleteMe'
+"
 
 
 if executable('rustc') == 1
@@ -563,3 +565,9 @@ nnoremap <leader>r :<C-U>RangerChooser<CR>
 
 " Limit the text width for emails
 au BufRead /tmp/mutt-* set tw=72
+
+" Update ctags on write
+autocmd BufWritePost *
+      \ if filereadable('tags') |
+      \   call system('ctags -a '.expand('%')) |
+      \ endif
