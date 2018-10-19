@@ -77,7 +77,7 @@ endif
 " line numbers:
 set number
 
-"set mousehide		" Hide the mouse when typing text
+set mousehide		" Hide the mouse when typing text
 set showmatch
 set incsearch
 set hlsearch
@@ -109,7 +109,7 @@ let output=system('xvidtune -show | grep "[0-9]*x[0-9]" | cut -d " " -f 1')
 "    set guifont=Liberation\ Mono\ for\ Powerline\ 13
 "endif
 
-set guifont=Monospace\ 12
+set guifont=Monospace\ 13
 
 " Basic editing sanity
 
@@ -240,7 +240,6 @@ let g:jedi#usages_command = "<leader>n"
 let g:jedi#rename_command = "<leader>r"
 
 
-"colorscheme vylight
 " gruvbox
 
 syntax enable
@@ -336,16 +335,6 @@ inoremap <f4> <Esc>O<Esc>:call InsertFile('reminder')<CR>
 nnoremap <f4> O<Esc>:call InsertFile('reminder')<CR><Esc>ggJ$a<Left>
 
 
-" Go
-
-"filetype off
-"filetype plugin indent off
-"set runtimepath+=/usr/local/go/misc/vim
-"filetype plugin indent on
-"syntax on
-"autocmd FileType go autocmd BufWritePre <buffer> Fmt
-
-
 " Racer [auto-complete for Rust]
 
 let racer_dir=$HOME . "/.vim/racer"
@@ -363,6 +352,7 @@ if executable('rustc')
     let rust_src_dir = $HOME . "/.vim/rust/src"
     let $RUST_SRC_PATH=rust_src_dir
 endif
+
 
 " Enable mouse in console mode
 
@@ -418,7 +408,6 @@ function! HiInterestingWord(n)
     normal! mz
 
     " Yank the current word into the z register.
-
     normal! "zyiw
 
     " Calculate an arbitrary match ID.  Hopefully nothing else is using it.
@@ -436,6 +425,7 @@ function! HiInterestingWord(n)
     " Move back to our original location.
     normal! `z
 endfunction
+
 
 " Default Highlights
 
@@ -505,6 +495,7 @@ function! AutoRestoreWinView()
     endif
 endfunction
 
+
 " When switching buffers, preserve window view.
 if v:version >= 700
     autocmd BufLeave * call AutoSaveWinView()
@@ -513,8 +504,10 @@ endif
 
 set noeb vb t_vb=
 
+
 " linux kernel style
 autocmd FileType c setlocal tabstop=8 softtabstop=8 shiftwidth=8 noexpandtab
+
 
 " ranger stuff
 function RangerExplorer()
@@ -527,9 +520,11 @@ function RangerExplorer()
 endfun
 map <Leader>x :call RangerExplorer()<CR>
 
+
 " run flake when saving
-"autocmd BufWritePost *.py call Flake8()
 "
+"autocmd BufWritePost *.py call Flake8()
+
 
 function! RangerChooser()
     let temp = tempname()
@@ -563,11 +558,16 @@ endfunction
 command! -bar RangerChooser call RangerChooser()
 nnoremap <leader>r :<C-U>RangerChooser<CR>
 
+
 " Limit the text width for emails
+
 au BufRead /tmp/mutt-* set tw=72
 
+
 " Update ctags on write
+
 autocmd BufWritePost *
       \ if filereadable('tags') |
       \   call system('ctags -a '.expand('%')) |
       \ endif
+
