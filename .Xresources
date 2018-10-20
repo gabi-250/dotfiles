@@ -1,4 +1,4 @@
-xterm*font: terminus-18
+xterm*font: terminus-20
 xterm*colorBDMode: true
 xterm*visualBell: false
 xterm*saveLines: 2000
@@ -15,14 +15,14 @@ xterm*boldMode: false
 
 ! Common
 
-#define S_yellow        #b58900
-#define S_orange        #cb4b16
-#define S_red           #dc322f
-#define S_magenta       #d33682
+#define S_yellow        #d79921
+#define S_orange        #d65d0e
+#define S_red           #ff0000
+#define S_magenta       #b16286
 #define S_violet        #6c71c4
-#define S_blue          #268bd2
-#define S_cyan          #2aa198
-#define S_green         #859900
+#define S_blue          #458588
+#define S_cyan          #689d6a
+#define S_green         #98971a
 
 
 ! Dark
@@ -38,14 +38,14 @@ xterm*boldMode: false
 
 ! Light
 
-#define S_base03        #fdf6e3
-#define S_base02        #eee8d5
-#define S_base01        #93a1a1
-#define S_base00        #839496
-#define S_base0         #073642
-#define S_base1         #586e75
-#define S_base2         #073642
-#define S_base3         #002b36
+#define S_base03        #fbf1c7
+#define S_base02        #ebdbb2
+#define S_base01        #bdae93
+#define S_base00        #928374
+#define S_base0         #504945
+#define S_base1         #7c6f64
+#define S_base2         #3c3836
+#define S_base3         #282828
 
 
 ! To only apply colors to your terminal, for example, prefix
@@ -70,11 +70,10 @@ xterm*boldMode: false
 *color6:                  S_cyan
 *color7:                  S_base2
 *color9:                  S_orange
-*color8:                  S_base03
+*color8:                  S_base00
 *color10:                 S_base01
 *color11:                 S_base00
 *color12:                 S_base0
 *color13:                 S_violet
 *color14:                 S_base1
 *color15:                 S_base3
-
