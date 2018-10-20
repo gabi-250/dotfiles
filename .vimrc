@@ -205,13 +205,24 @@ let g:ctrlp_match_func = { 'match': 'pymatcher#PyMatch' }
 let g:ctrlp_max_files = 0
 let g:ctrlp_clear_cache_on_exit = 0
 let g:ctrlp_custom_ignore = '\.(class|o|rlib|swp|pyc)$|(^|[/\\])\.(hg|git|bzr)($|[/\\])|__init__\.py'
-let g:ctrlp_user_command = ['ag %s --files-with-matches -g ""']
+
+" Use ripgrep
+if executable('rg')
+  let g:ctrlp_user_command = ['rg %s --files --color=never --glob ""']
+  let g:ctrlp_use_caching = 0
+endif
+
 let g:ctrlp_user_command += ['.git', 'cd %s && git ls-files . -co --exclude-standard', 'find %s -type f']
 let g:ctrlp_user_command += ['.hg', 'hg --cwd %s locate -I .']
 nmap <C-b> :CtrlPBuffer<CR>
 imap <C-b> <C-o>:CtrlPBuffer<CR>
 nmap <C-p> :CtrlPMixed<CR>
 imap <C-p> <C-o>:CtrlPMixed<CR>
+
+
+" Ignore temporary directories and swap files
+"
+set wildignore+=*/.git/*,*/tmp/*,*.swp
 
 
 " Funky
@@ -292,17 +303,17 @@ vmap h <Plug>(easymotion-bd-w)
 nmap * <Plug>(easymotion-sn)\<<C-R>=expand('<cword>')<CR>\><CR><CR>n
 
 
-" ack.vim
+" ripgrep
 
-if executable('ag')
-  let g:ackprg = 'ag --vimgrep'
+if executable('rg')
+  let grepprg = 'rg --color=never'
 endif
 
 
 " tmuxline
 
 let g:tmuxline_preset = {
-    \'c': '#(whoami)@#h',
+    \'c'       : '#(whoami)@#h',
     \'win'     : '#T',
     \'cwin'    : '#T',
     \'y'       : '%Y-%m-%d %l:%M%p',
