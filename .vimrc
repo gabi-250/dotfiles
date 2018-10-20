@@ -57,8 +57,7 @@ Plug 'tacahiroy/ctrlp-funky' " Search for functions in the current file
 Plug 'scrooloose/nerdcommenter' " Comment / uncomment blocks
 Plug 'vim-scripts/mako.vim' " Mako plugins
 Plug 'craigemery/vim-autotag'
-"Plug 'Valloric/YouCompleteMe'
-"
+Plug 'wincent/ferret'
 
 
 if executable('rustc') == 1
@@ -169,19 +168,19 @@ let g:gruvbox_contrast_light = 'hard'
 " Airline
 
 set laststatus=2
-let g:airline_theme             = 'gruvbox'
-let g:airline#extensions#branch#enabled    = 1
-let g:airline#extensions#syntastic#enabled = 1
+let g:airline_theme                         = 'gruvbox'
+let g:airline#extensions#branch#enabled     = 1
+let g:airline#extensions#syntastic#enabled  = 1
 if !exists('g:airline_symbols')
     let g:airline_symbols = {}
 endif
-let g:airline_left_sep = '▶'
-let g:airline_right_sep = '◀'
-let g:airline_symbols.branch = '⎇'
-let g:airline_symbols.paste = '∥'
-let g:airline_symbols.linenr = '¶'
-let g:airline_symbols.whitespace = 'Ξ'
-let g:airline#extensions#tabline#enabled = 1
+let g:airline_left_sep                      = '▶'
+let g:airline_right_sep                     = '◀'
+let g:airline_symbols.branch                = '⎇'
+let g:airline_symbols.paste                 = '∥'
+let g:airline_symbols.linenr                = '¶'
+let g:airline_symbols.whitespace            = 'Ξ'
+let g:airline#extensions#tabline#enabled    = 1
 let g:airline#extensions#bufferline#enabled = 0
 
 
@@ -205,6 +204,9 @@ let g:ctrlp_match_func = { 'match': 'pymatcher#PyMatch' }
 let g:ctrlp_max_files = 0
 let g:ctrlp_clear_cache_on_exit = 0
 let g:ctrlp_custom_ignore = '\.(class|o|rlib|swp|pyc)$|(^|[/\\])\.(hg|git|bzr)($|[/\\])|__init__\.py'
+
+
+let g:ctrlp_user_command = []
 
 " Use ripgrep
 if executable('rg')
@@ -304,14 +306,12 @@ nmap * <Plug>(easymotion-sn)\<<C-R>=expand('<cword>')<CR>\><CR><CR>n
 
 
 " ripgrep
-
 if executable('rg')
-  let grepprg = 'rg --color=never'
+  let grepprg = 'rg --vimgrep'
 endif
 
 
 " tmuxline
-
 let g:tmuxline_preset = {
     \'c'       : '#(whoami)@#h',
     \'win'     : '#T',
@@ -322,7 +322,6 @@ let g:tmuxline_preset = {
 
 
 " Email formatting
-
 command -range=% -nargs=* EmailFormat <line1>,<line2>!email_format
 
 fun EmailFormatBuffer()
@@ -346,8 +345,11 @@ inoremap <f4> <Esc>O<Esc>:call InsertFile('reminder')<CR>
 nnoremap <f4> O<Esc>:call InsertFile('reminder')<CR><Esc>ggJ$a<Left>
 
 
-" Racer [auto-complete for Rust]
+" Limit the text width for emails
+au BufRead /tmp/mutt-* set tw=72
 
+
+" Racer [auto-complete for Rust]
 let racer_dir=$HOME . "/.vim/racer"
 if executable('rustc')
     if !isdirectory(racer_dir)
@@ -366,7 +368,6 @@ endif
 
 
 " Enable mouse in console mode
-
 if has('mouse')
     set mouse+=a
     set mousemodel=popup_setpos
@@ -375,7 +376,6 @@ endif
 
 
 " Persistent undo
-
 set undofile                " Save undo's after file closes
 set undodir=$HOME/.vim/undo " where to save undo histories
 set undolevels=1000         " How many undos
@@ -520,23 +520,12 @@ set noeb vb t_vb=
 autocmd FileType c setlocal tabstop=8 softtabstop=8 shiftwidth=8 noexpandtab
 
 
-" ranger stuff
-function RangerExplorer()
-    exec "silent !ranger --choosefile=/tmp/vim_ranger_current_file " . system('echo "' . expand("%:p:h") . '" | sed -E "s/\ /\\\ /g"')
-    if filereadable('/tmp/vim_ranger_current_file')
-        exec 'edit ' . system('cat /tmp/vim_ranger_current_file | sed -E "s/\ /\\\ /g"')
-        call system('rm /tmp/vim_ranger_current_file')
-    endif
-    redraw!
-endfun
-map <Leader>x :call RangerExplorer()<CR>
-
-
 " run flake when saving
 "
 "autocmd BufWritePost *.py call Flake8()
 
 
+" Ranger stuff
 function! RangerChooser()
     let temp = tempname()
     " The option "--choosefiles" was added in ranger 1.5.1. Use the next line
@@ -570,13 +559,7 @@ command! -bar RangerChooser call RangerChooser()
 nnoremap <leader>r :<C-U>RangerChooser<CR>
 
 
-" Limit the text width for emails
-
-au BufRead /tmp/mutt-* set tw=72
-
-
 " Update ctags on write
-
 autocmd BufWritePost *
       \ if filereadable('tags') |
       \   call system('ctags -a '.expand('%')) |
