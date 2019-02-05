@@ -57,7 +57,7 @@ if [ -n "$force_color_prompt" ]; then
 fi
 
 if [ "$color_prompt" = yes ]; then
-    PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
+    PS1='${debian_chroot:+($debian_chroot)}\[\e[1;48;5;64;38;5;230m\]\u@\h\[\e[00m\]:\[\e[1;38;5;64m\]\w\$\[\e[00m\] '
 else
     PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
 fi
@@ -115,8 +115,6 @@ fi
 # Rust's cargo
 . ~/.cargo/env
 
-export PS1='${debian_chroot:+($debian_chroot)}\[\033[48;5;77m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
-
 set -o noclobber
 set bell-style none
 export GPG_TTY=$(tty)
@@ -124,3 +122,6 @@ xrdb ~/.Xresources
 
 alias dotfiles='git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 
+if [ -n "$DISPLAY" ]; then
+  xset b off
+fi
