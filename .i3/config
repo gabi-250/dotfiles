@@ -166,7 +166,7 @@ bindsym XF86MonBrightnessUp exec xbacklight -inc 20 # increase screen brightness
 bindsym XF86MonBrightnessDown exec xbacklight -dec 20 # decrease screen brightness
 
 # set a background image using feh
-exec --no-startup-id feh --bg-scale /usr/share/backgrounds/gnome/Terraform-green.jpg
+exec --no-startup-id feh --bg-scale /usr/share/backgrounds/gnome/endless-shapes.jpg
 
 # Binding for print screen - by gabi
 bindsym Print exec scrot --exec 'mv $f ~/Pictures/'
