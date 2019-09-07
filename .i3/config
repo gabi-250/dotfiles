@@ -194,3 +194,6 @@ bindsym $mod+o exec i3lock --image=/usr/share/backgrounds/gnome/Terraform-green.
 #exec --no-startup-id xautolock -time 5 -locker 'i3lock -p win -i $HOME/Pictures/win98.png'
 
 exec --no-startup-id xrdb ~/.Xresources
+
+# load my favourite layouts
+exec --no-startup-id ~/.i3/scripts/load_layouts.sh
