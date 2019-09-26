@@ -179,7 +179,13 @@ client.focused          #375806 #375806 #ffffff #2e9ef4  #285577
 bindsym $mod+n exec nm-applet
 
 # close nm-applet
-bindsym $mod++Shift+N exec pkill nm-applet
+bindsym $mod+Shift+N exec pkill nm-applet
+
+# open nitrokey-app
+bindsym $mod+z exec nitrokey-app
+
+# close nitrokey-app
+bindsym $mod+Shift+Z exec pkill nitrokey-app
 
 # open ranger
 bindsym $mod+p exec xterm -e ranger
