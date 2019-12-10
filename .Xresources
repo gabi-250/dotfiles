@@ -1,12 +1,15 @@
-xterm*font: terminus-20
-xterm*colorBDMode: true
-xterm*visualBell: false
-xterm*saveLines: 2000
-xterm*termName: xterm-256color
-xterm*selectToClipboard: true
-xterm*loginShell: true
-xterm*vt100*geometry: 80x50
-xterm*boldMode: false
+*font: terminus-20
+*colorBDMode: true
+*visualBell: false
+*saveLines: 2000
+*termName: xterm-256color
+*selectToClipboard: true
+*loginShell: true
+*vt100*geometry: 80x50
+*boldMode: false
+
+! urxvt
+URxvt.scrollBar: false
 
 ! Solarized color scheme for the X Window System
 !
