@@ -1,0 +1,12 @@
+*font: terminus-20
+*colorBDMode: true
+*visualBell: false
+*saveLines: 2000
+*termName: xterm-256color
+*selectToClipboard: true
+*loginShell: true
+*vt100*geometry: 80x50
+*boldMode: false
+
+! urxvt
+URxvt.scrollBar: false

@@ -1,0 +1,10 @@
+! Light
+
+#define S_base03        #fbf1c7
+#define S_base02        #ebdbb2
+#define S_base01        #bdae93
+#define S_base00        #928374
+#define S_base0         #504945
+#define S_base1         #7c6f64
+#define S_base2         #3c3836
+#define S_base3         #282828
