@@ -115,8 +115,6 @@ set bell-style none
 export GPG_TTY=$(tty)
 xrdb ~/.Xresources
 
-alias dotfiles='git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
-
 if [ -n "$DISPLAY" ]; then
   xset b off
 fi
