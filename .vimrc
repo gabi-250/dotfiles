@@ -58,7 +58,7 @@ Plug 'scrooloose/nerdcommenter' " Comment / uncomment blocks
 Plug 'vim-scripts/mako.vim' " Mako plugins
 Plug 'craigemery/vim-autotag'
 Plug 'wincent/ferret'
-
+Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 
 if executable('rustc') == 1
     Plug 'phildawes/racer' " Rust autocomplete
