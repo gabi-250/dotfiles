@@ -2,3 +2,6 @@
 ! symlink either to xterm-light or xterm-dark
 #include ".Xresources.d/xterm-base-theme"
 #include ".Xresources.d/xterm-colours"
+
+Xcursor.theme: cursor-theme
+Xcursor.size: 16
