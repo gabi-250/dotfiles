@@ -101,14 +101,12 @@ set display+=lastline
 set nojoinspaces
 set lazyredraw
 
-let output=system('xvidtune -show | grep "[0-9]*x[0-9]" | cut -d " " -f 1')
-"if output =~ ".2560x1440.*"
-"    set guifont=Liberation\ Mono\ for\ Powerline\ 10
-"else
-"    set guifont=Liberation\ Mono\ for\ Powerline\ 13
-"endif
-
-set guifont=Monospace\ 13
+let output=system('xrandr | grep " connected.*2560x1440"')
+if empty(output)
+    set guifont=Monospace\ 12
+else
+    set guifont=Monospace\ 11
+endif
 
 " Basic editing sanity
 
@@ -395,12 +393,14 @@ set undoreload=10000        " number of lines to save for undo
 " \0 unsets all highlighting
 
 function! HiInterestingWord(n)
-    hi def HiInterestingWord1 guifg=#000000 ctermfg=16 guibg=#ffa724 ctermbg=214
-    hi def HiInterestingWord2 guifg=#000000 ctermfg=16 guibg=#aeee00 ctermbg=154
-    hi def HiInterestingWord3 guifg=#000000 ctermfg=16 guibg=#8cffba ctermbg=121
-    hi def HiInterestingWord4 guifg=#000000 ctermfg=16 guibg=#b88853 ctermbg=137
-    hi def HiInterestingWord5 guifg=#000000 ctermfg=16 guibg=#ff9eb8 ctermbg=211
-    hi def HiInterestingWord6 guifg=#000000 ctermfg=16 guibg=#ff2c4b ctermbg=195
+    hi def HiInterestingWord1 guifg=#000000 ctermfg=16  guibg=#ffa724 ctermbg=214
+    hi def HiInterestingWord2 guifg=#000000 ctermfg=16  guibg=#aeee00 ctermbg=154
+    hi def HiInterestingWord3 guifg=#000000 ctermfg=16  guibg=#8cffba ctermbg=121
+    hi def HiInterestingWord4 guifg=#000000 ctermfg=16  guibg=#b88853 ctermbg=137
+    hi def HiInterestingWord5 guifg=#000000 ctermfg=16  guibg=#ff9eb8 ctermbg=211
+    hi def HiInterestingWord6 guifg=#000000 ctermfg=16  guibg=#ff2c4b ctermbg=195
+    hi def HiInterestingWord7 guifg=#000000 ctermfg=16  guibg=#ffffff ctermbg=231
+    hi def HiInterestingWord8 guifg=#ffffff ctermfg=231 guibg=#000000 ctermbg=16
 
     " HiInterestingWord(0) clears all the matches, including the general
     " search highlighting.
@@ -447,6 +447,8 @@ nmap <silent> <leader>3 :call HiInterestingWord(3)<cr>
 nmap <silent> <leader>4 :call HiInterestingWord(4)<cr>
 nmap <silent> <leader>5 :call HiInterestingWord(5)<cr>
 nmap <silent> <leader>6 :call HiInterestingWord(6)<cr>
+nmap <silent> <leader>7 :call HiInterestingWord(7)<cr>
+nmap <silent> <leader>8 :call HiInterestingWord(8)<cr>
 
 
 " Allow the font sizes to be quickly bumped up and down with Ctrl-↑ and Ctrl-↓
@@ -523,40 +525,6 @@ autocmd FileType c setlocal tabstop=8 softtabstop=8 shiftwidth=8 noexpandtab
 " run flake when saving
 "
 "autocmd BufWritePost *.py call Flake8()
-
-
-" Ranger stuff
-function! RangerChooser()
-    let temp = tempname()
-    " The option "--choosefiles" was added in ranger 1.5.1. Use the next line
-    " with ranger 1.4.2 through 1.5.0 instead.
-    "exec 'silent !ranger --choosefile=' . shellescape(temp)
-    if has("gui_running")
-        exec 'silent !xterm -e ranger --choosefiles=' . shellescape(temp)
-    else
-        exec 'silent !ranger --choosefiles=' . shellescape(temp)
-    endif
-    if !filereadable(temp)
-        redraw!
-        " Nothing to read.
-        return
-    endif
-    let names = readfile(temp)
-    if empty(names)
-        redraw!
-        " Nothing to open.
-        return
-    endif
-    " Edit the first item.
-    exec 'edit ' . fnameescape(names[0])
-    " Add any remaning items to the arg list/buffer list.
-    for name in names[1:]
-        exec 'argadd ' . fnameescape(name)
-    endfor
-    redraw!
-endfunction
-command! -bar RangerChooser call RangerChooser()
-nnoremap <leader>r :<C-U>RangerChooser<CR>
 
 
 " Update ctags on write
