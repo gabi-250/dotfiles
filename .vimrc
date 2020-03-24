@@ -72,10 +72,7 @@ if install_plugs == 1
     :PlugInstall
 endif
 
-
-" line numbers:
-set number
-
+set number          " Show line numbers
 set mousehide		" Hide the mouse when typing text
 set showmatch
 set incsearch
@@ -115,6 +112,10 @@ inoremap <S-BS> <C-o>db
 noremap <S-BS> db
 inoremap <S-Del> <C-o>dw
 noremap <S-Del> dw
+
+" .vimrc quick open
+nnoremap <Leader>ev  :split $MYVIMRC<CR>
+nnoremap <Leader>sov :source $MYVIMRC<CR>
 
 
 " Spelling
@@ -517,7 +518,6 @@ endif
 
 set noeb vb t_vb=
 
-
 " linux kernel style
 autocmd FileType c setlocal tabstop=8 softtabstop=8 shiftwidth=8 noexpandtab
 
@@ -532,4 +532,3 @@ autocmd BufWritePost *
       \ if filereadable('tags') |
       \   call system('ctags -a '.expand('%')) |
       \ endif
-
