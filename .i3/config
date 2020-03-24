@@ -166,7 +166,7 @@ bindsym XF86MonBrightnessUp exec xbacklight -inc 20 # increase screen brightness
 bindsym XF86MonBrightnessDown exec xbacklight -dec 20 # decrease screen brightness
 
 # set a background image using feh
-exec --no-startup-id feh --bg-scale /usr/share/backgrounds/gnome/endless-shapes.jpg
+exec --no-startup-id feh --bg-scale /usr/share/backgrounds/gnome/adwaita-night.png
 
 # Binding for print screen - by gabi
 bindsym Print exec scrot --exec 'mv $f ~/Pictures/'
@@ -191,7 +191,7 @@ bindsym $mod+Shift+Z exec pkill nitrokey-app
 bindsym $mod+p exec xterm -e ranger
 
 # lock screen
-bindsym $mod+o exec i3lock --image=/usr/share/backgrounds/gnome/Terraform-green.png
+bindsym $mod+o exec "i3lock --image=$HOME/Pictures/lock-screen.png --tiling"
 
 # battery notifications
 #exec --no-startup-id /opt/batnot/batnot
