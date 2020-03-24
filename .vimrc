@@ -127,6 +127,10 @@ set spelllang=en_us
 
 match ErrorMsg '\s\+$'
 
+" Uppercase constants
+nnoremap <S-U> viwUe
+inoremap <S-U> <ESC>viwUea
+
 " Removes trailing spaces
 function! TrimWhiteSpace()
     %s/\s\+$//e
