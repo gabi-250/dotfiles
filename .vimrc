@@ -1,9 +1,4 @@
-set nocompatible
-set encoding=utf-8
-
-" pasting from 'outside'
-set clipboard=unnamedplus
-
+" Plugins ---------------------- {{{
 let install_plugs=0
 let vim_plug=expand('~/.vim/autoload/plug.vim')
 if !filereadable(vim_plug)
@@ -71,9 +66,12 @@ if install_plugs == 1
     echo ""
     :PlugInstall
 endif
+" }}}
 
+" Basic settings---------------------- {{{
 set number          " Show line numbers
 set mousehide		" Hide the mouse when typing text
+set mouse=
 set showmatch
 set incsearch
 set hlsearch
@@ -83,6 +81,10 @@ set wildmenu
 set wildmode=list:longest
 set guioptions-=T
 set hidden
+set nojoinspaces
+set nocompatible
+set encoding=utf-8
+set clipboard=unnamedplus
 
 set backspace=indent,eol,start
 set tw=80
@@ -114,64 +116,75 @@ inoremap <S-Del> <C-o>dw
 noremap <S-Del> dw
 
 " .vimrc quick open
+
 nnoremap <Leader>ev  :split $MYVIMRC<CR>
 nnoremap <Leader>sov :source $MYVIMRC<CR>
-
 
 " Spelling
 
 set spelllang=en_us
-
 
 " Misc
 
 match ErrorMsg '\s\+$'
 
 " Uppercase constants
-nnoremap <S-U> viwUe
-inoremap <S-U> <ESC>viwUea
 
-" Removes trailing spaces
+nnoremap <S-U> viwUe
+" }}}
+
+" Removes trailing spaces ---------------------- {{{
 function! TrimWhiteSpace()
     %s/\s\+$//e
 endfunction
 
 nnoremap <silent> <Leader>rts :call TrimWhiteSpace()<CR>
-autocmd FileWritePre    * :call TrimWhiteSpace()
-autocmd FileAppendPre   * :call TrimWhiteSpace()
-autocmd FilterWritePre  * :call TrimWhiteSpace()
-autocmd BufWritePre     * :call TrimWhiteSpace()
 
+augroup whitespace
+    autocmd FileWritePre    * :call TrimWhiteSpace()
+    autocmd FileAppendPre   * :call TrimWhiteSpace()
+    autocmd FilterWritePre  * :call TrimWhiteSpace()
+    autocmd BufWritePre     * :call TrimWhiteSpace()
+augroup END
+" }}}
+
+" FileType ---------------------- {{{
+augroup filetype_vim
+    autocmd!
+    autocmd FileType vim setlocal foldmethod=marker
+augroup END
+
+autocmd FileType mail set spell |
+  \ set textwidth=76 |
+  \ let &colorcolumn=join(range(81,9999), ',')
+
+autocmd FileType html,python,rust,tex set spell
+
+autocmd FileType html,tex autocmd BufEnter * :syntax sync fromstart
+
+autocmd FileType sh set tabstop=4 shiftwidth=4 softtabstop=4
+
+autocmd FileType gitcommit set spell |
+  \ set textwidth=80 |
+  \ let &colorcolumn=join(range(81,9999), ',')
+
+" linux kernel style
+autocmd FileType c setlocal tabstop=8 softtabstop=8 shiftwidth=8 noexpandtab
+" }}}
 
 let output=system("find ~/.vim/spell/en.utf-8.add -cnewer ~/.vim/spell/en.utf-8.add.spl | wc -l")
 if str2nr(output) == 1
     mkspell! ~/.vim/spell/en.utf-8.add
 endif
 let g:tex_flavor='latex'
-if has("autocmd")
-    autocmd FileType mail set spell |
-      \ set textwidth=76 |
-      \ let &colorcolumn=join(range(81,9999), ',')
 
-    autocmd FileType html,python,rust,tex set spell
-
-    autocmd FileType html,tex autocmd BufEnter * :syntax sync fromstart
-
-    autocmd FileType sh set tabstop=4 shiftwidth=4 softtabstop=4
-
-    autocmd FileType gitcommit set spell |
-      \ set textwidth=80 |
-      \ let &colorcolumn=join(range(81,9999), ',')
-
-    autocmd BufNewFile,BufRead * NeoComplCacheLock
-endif
-
-let g:gruvbox_contrast_light = 'hard'
+autocmd BufNewFile,BufRead * NeoComplCacheLock
 
 " Airline
 
 set laststatus=2
 let g:airline_theme                         = 'gruvbox'
+let g:gruvbox_contrast_light = 'hard'
 let g:airline#extensions#branch#enabled     = 1
 let g:airline#extensions#syntastic#enabled  = 1
 if !exists('g:airline_symbols')
@@ -212,6 +225,7 @@ let g:ctrlp_custom_ignore = '\.(class|o|rlib|swp|pyc)$|(^|[/\\])\.(hg|git|bzr)($
 let g:ctrlp_user_command = []
 
 " Use ripgrep
+
 if executable('rg')
   let g:ctrlp_user_command = ['rg %s --files --color=never --glob ""']
   let g:ctrlp_use_caching = 0
@@ -284,11 +298,6 @@ let g:SuperTabDefaultCompletionType = 'context'
 let g:SuperTabContextTextOmniPrecedence=['&omnifunc', '&completefunc']
 
 
-" Syntastic
-
-" let g:syntastic_disabled_filetypes=['tex']
-
-
 " neocomplcache
 
 let g:neocomplcache_enable_at_startup = 1
@@ -302,9 +311,9 @@ map  / <Plug>(easymotion-sn)
 omap / <Plug>(easymotion-tn)
 map  n <Plug>(easymotion-next)
 map  N <Plug>(easymotion-prev)
-nmap h <Plug>(easymotion-bd-w)
-omap h <Plug>(easymotion-bd-w)
-vmap h <Plug>(easymotion-bd-w)
+nmap ; <Plug>(easymotion-bd-w)
+omap ; <Plug>(easymotion-bd-w)
+vmap ; <Plug>(easymotion-bd-w)
 nmap * <Plug>(easymotion-sn)\<<C-R>=expand('<cword>')<CR>\><CR><CR>n
 
 
@@ -347,12 +356,11 @@ inoremap <S-F3> <Esc>:call InsertFile('sig_kings')<CR>
 inoremap <f4> <Esc>O<Esc>:call InsertFile('reminder')<CR>
 nnoremap <f4> O<Esc>:call InsertFile('reminder')<CR><Esc>ggJ$a<Left>
 
-
 " Limit the text width for emails
-au BufRead /tmp/mutt-* set tw=72
 
+autocmd BufRead /tmp/mutt-* set tw=72
 
-" Racer [auto-complete for Rust]
+" Racer [auto-complete for Rust] ---------------------- {{{
 let racer_dir=$HOME . "/.vim/racer"
 if executable('rustc')
     if !isdirectory(racer_dir)
@@ -368,35 +376,22 @@ if executable('rustc')
     let rust_src_dir = $HOME . "/.vim/rust/src"
     let $RUST_SRC_PATH=rust_src_dir
 endif
+" }}}
 
-
-" Enable mouse in console mode
-if has('mouse')
-    set mouse+=a
-    set mousemodel=popup_setpos
-    set ttymouse=xterm2
-endif
-
-
-" Persistent undo
+" Persistend undo ---------------------- {{{
 set undofile                " Save undo's after file closes
 set undodir=$HOME/.vim/undo " where to save undo histories
 set undolevels=1000         " How many undos
 set undoreload=10000        " number of lines to save for undo
+" }}}
 
-
+" Highlight word ---------------------- {{{
 " Highlight Word, initial version from:
 "   https://gist.github.com/emilyst/9243544#file-vimrc-L142
 "
 " This mini-plugin provides a few mappings for highlighting words temporarily.
 "
-" Sometimes you're looking at a hairy piece of code and would like a certain
-" word or two to stand out temporarily.  You can search for it, but that only
-" gives you one color of highlighting.  Now you can use <leader>N where N is
-" a number from 1-6 to highlight the current word in a specific color.
-"
 " \0 unsets all highlighting
-
 function! HiInterestingWord(n)
     hi def HiInterestingWord1 guifg=#000000 ctermfg=16  guibg=#ffa724 ctermbg=214
     hi def HiInterestingWord2 guifg=#000000 ctermfg=16  guibg=#aeee00 ctermbg=154
@@ -454,8 +449,10 @@ nmap <silent> <leader>5 :call HiInterestingWord(5)<cr>
 nmap <silent> <leader>6 :call HiInterestingWord(6)<cr>
 nmap <silent> <leader>7 :call HiInterestingWord(7)<cr>
 nmap <silent> <leader>8 :call HiInterestingWord(8)<cr>
+" }}}
 
 
+" Font Size ---------------------- {{{
 " Allow the font sizes to be quickly bumped up and down with Ctrl-↑ and Ctrl-↓
 
 let s:pattern = '^\(.* \)\([1-9][0-9]*\)$'
@@ -487,7 +484,7 @@ command! SmallerFont call SmallerFont()
 
 nnoremap <C-Up> :LargerFont<CR>
 nnoremap <C-Down> :SmallerFont<CR>
-
+" }}}
 
 " Don't shuffle the screen and cursor when switching between buffers
 " From http://vim.wikia.com/wiki/Avoid_scrolling_when_switch_buffers
@@ -521,15 +518,6 @@ if v:version >= 700
 endif
 
 set noeb vb t_vb=
-
-" linux kernel style
-autocmd FileType c setlocal tabstop=8 softtabstop=8 shiftwidth=8 noexpandtab
-
-
-" run flake when saving
-"
-"autocmd BufWritePost *.py call Flake8()
-
 
 " Update ctags on write
 autocmd BufWritePost *
