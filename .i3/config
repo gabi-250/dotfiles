@@ -201,5 +201,14 @@ bindsym $mod+o exec "i3lock --image=$HOME/Pictures/lock-screen.png --tiling"
 
 exec --no-startup-id xrdb ~/.Xresources
 
+# search the web
+bindsym $mod+t exec ~/.i3/scripts/websearch.sh
+
+# search docs.rs
+bindsym $mod+u exec ~/.i3/scripts/websearch.sh docsrs
+
+# search duckduckgo
+bindsym $mod+y exec ~/.i3/scripts/websearch.sh duckduckgo
+
 # load my favourite layouts
 exec --no-startup-id ~/.i3/scripts/load_layouts.sh
