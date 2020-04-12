@@ -26,18 +26,20 @@ if !filereadable(vim_plug)
 endif
 call plug#begin('~/.vim/plugged')
 Plug 'ervandew/supertab'
-Plug 'davidhalter/jedi-vim' " Python auto-complete
-Plug 'tpope/vim-fugitive' " Git extras
+Plug 'davidhalter/jedi-vim'         " Python auto-complete
+Plug 'tpope/vim-fugitive'           " Git extras
 Plug 'tpope/vim-repeat'
 Plug 'bling/vim-airline'
-Plug 'scrooloose/syntastic' " Multi-language syntax checker
+Plug 'scrooloose/syntastic'         " Multi-language syntax checker
 Plug 'mhinz/vim-signify'
-Plug 'sjl/gundo.vim' " Tree of undos
+Plug 'sjl/gundo.vim'                " Tree of undos
 Plug 'maxbrunsfeld/vim-yankstack'
-Plug 'Shougo/neocomplcache.vim'
+Plug 'Shougo/deoplete.nvim'         " Auto-complete
+Plug 'roxma/nvim-yarp'              " Needed for deoplete
+Plug 'roxma/vim-hug-neovim-rpc'     " Needed for deoplete
 Plug 'tpope/vim-sensible'
-Plug 'kien/ctrlp.vim' " Fuzzy filename matcher
-Plug 'FelikZ/ctrlp-py-matcher' " Speeds up CtrlP
+Plug 'kien/ctrlp.vim'               " Fuzzy filename matcher
+Plug 'FelikZ/ctrlp-py-matcher'      " Speeds up CtrlP
 Plug 'ap/vim-css-color'
 Plug 'bling/vim-bufferline'
 Plug 'Lokaltog/vim-easymotion'
@@ -45,12 +47,12 @@ Plug 'rust-lang/rust.vim'
 Plug 'mileszs/ack.vim'
 Plug 'tpope/vim-sleuth'
 Plug 'tpope/vim-endwise'
-Plug 'morhetz/gruvbox' " Nice colour scheme
+Plug 'morhetz/gruvbox'              " Nice colour scheme
 Plug 'nvie/vim-flake8'
 Plug 'edkolev/tmuxline.vim'
-Plug 'tacahiroy/ctrlp-funky' " Search for functions in the current file
-Plug 'scrooloose/nerdcommenter' " Comment / uncomment blocks
-Plug 'vim-scripts/mako.vim' " Mako plugins
+Plug 'tacahiroy/ctrlp-funky'        " Search for functions in the current file
+Plug 'scrooloose/nerdcommenter'     " Comment / uncomment blocks
+Plug 'vim-scripts/mako.vim'         " Mako plugins
 Plug 'craigemery/vim-autotag'
 Plug 'wincent/ferret'
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
@@ -62,6 +64,14 @@ call plug#end()
 
 "...All your other bundles...
 if install_plugs == 1
+    if executable('pip3')
+        echo "Installing pynvim (required for deoplete)"
+        silent !sh -c "pip3 install --user --upgrade pynvim"
+    else
+        echo "pip3 not found (needed to install pynvim)"
+        echo "Warning: deoplete won't function correctly"
+    endif
+
     echo "Installing plugins (ignore key map error messages)"
     echo ""
     :PlugInstall
@@ -172,16 +182,7 @@ autocmd FileType gitcommit set spell |
 autocmd FileType c setlocal tabstop=8 softtabstop=8 shiftwidth=8 noexpandtab
 " }}}
 
-let output=system("find ~/.vim/spell/en.utf-8.add -cnewer ~/.vim/spell/en.utf-8.add.spl | wc -l")
-if str2nr(output) == 1
-    mkspell! ~/.vim/spell/en.utf-8.add
-endif
-let g:tex_flavor='latex'
-
-autocmd BufNewFile,BufRead * NeoComplCacheLock
-
-" Airline
-
+" Airline ---------------------- {{{
 set laststatus=2
 let g:airline_theme                         = 'gruvbox'
 let g:gruvbox_contrast_light = 'hard'
@@ -198,10 +199,9 @@ let g:airline_symbols.linenr                = '¶'
 let g:airline_symbols.whitespace            = 'Ξ'
 let g:airline#extensions#tabline#enabled    = 1
 let g:airline#extensions#bufferline#enabled = 0
+" }}}
 
-
-" Bufferline
-
+" Bufferline ---------------------- {{{
 let g:bufferline_echo = 0
 let g:bufferline_rotate = 2
 let g:bufferline_fname_mod = ':.'
@@ -209,10 +209,9 @@ nmap <C-PageUp> :bp!<CR>
 imap <C-PageUp> <C-o>:bp!<CR>
 nmap <C-PageDown> :bn!<CR>
 imap <C-PageDown> <C-o>:bn!<CR>
+" }}}
 
-
-" Ctrl-P
-
+" Ctrl-P --------------------- {{{
 let g:ctrlp_by_filename = 0
 let g:ctrlp_regexp = 0
 let g:ctrlp_match_window = 'order:ttb,min:10,max:100,results:100'
@@ -221,15 +220,7 @@ let g:ctrlp_max_files = 0
 let g:ctrlp_clear_cache_on_exit = 0
 let g:ctrlp_custom_ignore = '\.(class|o|rlib|swp|pyc)$|(^|[/\\])\.(hg|git|bzr)($|[/\\])|__init__\.py'
 
-
 let g:ctrlp_user_command = []
-
-" Use ripgrep
-
-if executable('rg')
-  let g:ctrlp_user_command = ['rg %s --files --color=never --glob ""']
-  let g:ctrlp_use_caching = 0
-endif
 
 let g:ctrlp_user_command += ['.git', 'cd %s && git ls-files . -co --exclude-standard', 'find %s -type f']
 let g:ctrlp_user_command += ['.hg', 'hg --cwd %s locate -I .']
@@ -237,28 +228,20 @@ nmap <C-b> :CtrlPBuffer<CR>
 imap <C-b> <C-o>:CtrlPBuffer<CR>
 nmap <C-p> :CtrlPMixed<CR>
 imap <C-p> <C-o>:CtrlPMixed<CR>
+" }}}
 
-
-" Ignore temporary directories and swap files
-"
-set wildignore+=*/.git/*,*/tmp/*,*.swp
-
-
-" Funky
-
+" Funky --------------------- {{{
 nnoremap <C-f> :CtrlPFunky<Cr>
 let g:ctrlp_funky_matchtype = 'path'
 let g:ctrlp_funky_syntax_highlight = 1
+" }}}
 
-
-" Yankstack
-
+" Yankstack -------------------- {{{
 nmap <leader>p <Plug>yankstack_substitute_older_paste
 nmap <leader>P <Plug>yankstack_substitute_newer_paste
+" }}}
 
-
-" Jedi
-
+" jedi -------------------- {{{
 let g:jedi#auto_initialization = 0
 let g:jedi#popup_on_dot = 0
 autocmd FileType python setlocal completeopt-=preview
@@ -268,10 +251,9 @@ let g:jedi#goto_command = "gd"
 let g:jedi#documentation_command = "K"
 let g:jedi#usages_command = "<leader>n"
 let g:jedi#rename_command = "<leader>r"
+" }}}
 
-
-" gruvbox
-
+" gruvbox ---------------------- {{{
 syntax enable
 set background=light
 function! Togglebg()
@@ -285,26 +267,9 @@ colorscheme gruvbox
 map <silent> <F6> :call Togglebg()<CR>
 imap <silent> <F6> <ESC>:call Togglebg()<CR>a
 vmap <silent> <F6> <ESC>:call Togglebg()<CR>gv
+" }}}
 
-
-" Sy
-
-let g:signify_vcs_list = ['hg', 'git']
-
-
-" Supertab
-
-let g:SuperTabDefaultCompletionType = 'context'
-let g:SuperTabContextTextOmniPrecedence=['&omnifunc', '&completefunc']
-
-
-" neocomplcache
-
-let g:neocomplcache_enable_at_startup = 1
-
-
-" EasyMotion
-
+" EasyMotion ---------------------- {{{
 let g:EasyMotion_smartcase = 1
 let g:EasyMotion_use_upper = 1
 map  / <Plug>(easymotion-sn)
@@ -315,15 +280,9 @@ nmap ; <Plug>(easymotion-bd-w)
 omap ; <Plug>(easymotion-bd-w)
 vmap ; <Plug>(easymotion-bd-w)
 nmap * <Plug>(easymotion-sn)\<<C-R>=expand('<cword>')<CR>\><CR><CR>n
+" }}}
 
-
-" ripgrep
-if executable('rg')
-  let grepprg = 'rg --vimgrep'
-endif
-
-
-" tmuxline
+" tmuxline ---------------------- {{{
 let g:tmuxline_preset = {
     \'c'       : '#(whoami)@#h',
     \'win'     : '#T',
@@ -331,9 +290,9 @@ let g:tmuxline_preset = {
     \'y'       : '%Y-%m-%d %l:%M%p',
     \'z'       : '#W',
     \'options' : {'status-justify': 'left'}}
+" }}}
 
-
-" Email formatting
+" Email formatting ---------------------- {{{
 command -range=% -nargs=* EmailFormat <line1>,<line2>!email_format
 
 fun EmailFormatBuffer()
@@ -359,6 +318,7 @@ nnoremap <f4> O<Esc>:call InsertFile('reminder')<CR><Esc>ggJ$a<Left>
 " Limit the text width for emails
 
 autocmd BufRead /tmp/mutt-* set tw=72
+" }}}
 
 " Racer [auto-complete for Rust] ---------------------- {{{
 let racer_dir=$HOME . "/.vim/racer"
@@ -451,7 +411,6 @@ nmap <silent> <leader>7 :call HiInterestingWord(7)<cr>
 nmap <silent> <leader>8 :call HiInterestingWord(8)<cr>
 " }}}
 
-
 " Font Size ---------------------- {{{
 " Allow the font sizes to be quickly bumped up and down with Ctrl-↑ and Ctrl-↓
 
@@ -485,6 +444,14 @@ command! SmallerFont call SmallerFont()
 nnoremap <C-Up> :LargerFont<CR>
 nnoremap <C-Down> :SmallerFont<CR>
 " }}}
+
+" Other ---------------------- {{{
+" Use ripgrep
+
+if executable('rg')
+  let g:ctrlp_user_command = ['rg %s --files --color=never --glob ""']
+  let g:ctrlp_use_caching = 0
+endif
 
 " Don't shuffle the screen and cursor when switching between buffers
 " From http://vim.wikia.com/wiki/Avoid_scrolling_when_switch_buffers
@@ -524,3 +491,27 @@ autocmd BufWritePost *
       \ if filereadable('tags') |
       \   call system('ctags -a '.expand('%')) |
       \ endif
+
+" Ignore temporary directories and swap files
+set wildignore+=*/.git/*,*/tmp/*,*.swp
+
+let output=system("find ~/.vim/spell/en.utf-8.add -cnewer ~/.vim/spell/en.utf-8.add.spl | wc -l")
+if str2nr(output) == 1
+    mkspell! ~/.vim/spell/en.utf-8.add
+endif
+let g:tex_flavor='latex'
+
+" Use deoplete.
+let g:deoplete#enable_at_startup = 1
+
+" Sy
+let g:signify_vcs_list = ['hg', 'git']
+
+" Supertab
+let g:SuperTabDefaultCompletionType = 'context'
+let g:SuperTabContextTextOmniPrecedence=['&omnifunc', '&completefunc']
+
+" neocomplcache
+let g:neocomplcache_enable_at_startup = 1
+
+" }}}
