@@ -57,8 +57,8 @@ Plug 'craigemery/vim-autotag'
 Plug 'wincent/ferret'
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 
-if executable('rustc') == 1
-    Plug 'phildawes/racer' " Rust autocomplete
+if executable('rustup') == 1
+    Plug 'racer-rust/vim-racer'         " Rust autocomplete
 endif
 call plug#end()
 
@@ -322,13 +322,14 @@ autocmd BufRead /tmp/mutt-* set tw=72
 
 " Racer [auto-complete for Rust] ---------------------- {{{
 let racer_dir=$HOME . "/.vim/racer"
-if executable('rustc')
+if executable('rustup')
     if !isdirectory(racer_dir)
         echo "Downloading and building racer and rust in the background."
         echo "This will take some time. Whilst this is ongoing, you may quit"
         echo "this VIM and start others without issue."
-        silent !sh -c "git clone https://github.com/phildawes/racer $HOME/.vim/racer && cd $HOME/.vim/racer && cargo build --release" > /dev/null 2> /dev/null &
-        silent !git clone https://github.com/rust-lang/rust $HOME/.vim/rust > /dev/null 2> /dev/null &
+        silent !sh -c  "rustup toolchain install nightly"
+        silent !sh -c "git clone https://github.com/racer-rust/racer $HOME/.vim/racer && cd $HOME/.vim/racer && cargo +nightly build --release" > /dev/null 2> /dev/null &
+        silent !sh -c "rustup component add rust-src"
         let g:racer_cmd = ""
     else
         let g:racer_cmd = "$HOME/.vim/racer/target/release/racer"
@@ -336,6 +337,15 @@ if executable('rustc')
     let rust_src_dir = $HOME . "/.vim/rust/src"
     let $RUST_SRC_PATH=rust_src_dir
 endif
+
+augroup Racer
+    autocmd!
+    autocmd FileType rust nmap <buffer> gd         <Plug>(rust-def)
+    autocmd FileType rust nmap <buffer> gs         <Plug>(rust-def-split)
+    autocmd FileType rust nmap <buffer> gx         <Plug>(rust-def-vertical)
+    autocmd FileType rust nmap <buffer> gt         <Plug>(rust-def-tab)
+    autocmd FileType rust nmap <buffer> <leader>gd <Plug>(rust-doc)
+augroup END
 " }}}
 
 " Persistend undo ---------------------- {{{
