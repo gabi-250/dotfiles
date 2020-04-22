@@ -56,6 +56,9 @@ Plug 'vim-scripts/mako.vim'         " Mako plugins
 Plug 'craigemery/vim-autotag'
 Plug 'wincent/ferret'
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+Plug 'leafgarland/typescript-vim'
+Plug 'Quramy/tsuquyomi'
+Plug 'saltstack/salt-vim'
 
 if executable('rustup') == 1
     Plug 'racer-rust/vim-racer'         " Rust autocomplete
@@ -186,6 +189,9 @@ autocmd FileType gitcommit set spell |
 
 " linux kernel style
 autocmd FileType c setlocal tabstop=8 softtabstop=8 shiftwidth=8 noexpandtab
+
+" typescript
+autocmd FileType typescript setlocal completeopt+=menu,preview
 " }}}
 
 " Airline ---------------------- {{{
