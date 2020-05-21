@@ -529,4 +529,7 @@ let g:SuperTabContextTextOmniPrecedence=['&omnifunc', '&completefunc']
 " neocomplcache
 let g:neocomplcache_enable_at_startup = 1
 
+" Clear search highlighting (without unsetting hlsearch).
+nmap <Leader>- :let @/=""<CR>
+
 " }}}
