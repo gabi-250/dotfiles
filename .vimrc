@@ -134,7 +134,7 @@ nnoremap <Leader>sov :source $MYVIMRC<CR>
 
 set spelllang=en_us
 
-" Misc
+" Highlight trailing whitespace
 
 match ErrorMsg '\s\+$'
 
@@ -162,6 +162,12 @@ augroup END
 augroup filetype_vim
     autocmd!
     autocmd FileType vim setlocal foldmethod=marker
+augroup END
+
+augroup filetype_rust
+    autocmd!
+    autocmd FileType rust setlocal foldmethod=syntax
+    autocmd FileType rust setlocal nofoldenable
 augroup END
 
 autocmd FileType mail set spell |
@@ -486,7 +492,6 @@ function! AutoRestoreWinView()
         unlet w:SavedBufView[buf]
     endif
 endfunction
-
 
 " When switching buffers, preserve window view.
 if v:version >= 700
