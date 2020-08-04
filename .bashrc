@@ -16,8 +16,10 @@ HISTCONTROL=ignoreboth
 shopt -s histappend
 
 # for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
-HISTSIZE=1000
-HISTFILESIZE=2000
+HISTSIZE=10000
+HISTFILESIZE=20000
+HISTTIMEFORMAT="%h %d %H:%M:%S "
+HISTIGNORE="ls:history"
 
 # check the window size after each command and, if necessary,
 # update the values of LINES and COLUMNS.
@@ -118,3 +120,5 @@ xrdb ~/.Xresources
 if [ -n "$DISPLAY" ]; then
   xset b off
 fi
+
+PROMPT_COMMAND='history -a'
