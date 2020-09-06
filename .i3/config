@@ -204,8 +204,8 @@ exec --no-startup-id xrdb ~/.Xresources
 # search the web
 bindsym $mod+t exec ~/.i3/scripts/websearch.sh
 
-# search docs.rs
-bindsym $mod+u exec ~/.i3/scripts/websearch.sh docsrs
+# search crates.io
+bindsym $mod+u exec ~/.i3/scripts/websearch.sh crates.io
 
 # search duckduckgo
 bindsym $mod+y exec ~/.i3/scripts/websearch.sh duckduckgo

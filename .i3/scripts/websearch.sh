@@ -4,7 +4,7 @@
 SEARCH_SB='#F6E60E'
 SEARCH_SF='#000000'
 
-ELVI=('duckduckgo' 'docsrs')
+ELVI=('duckduckgo' 'docsrs' 'crates.io')
 ELVI_STR=$(printf '\\n%s' "${ELVI[@]}")
 ELVI_STR=${ELVI_STR:2}
 
@@ -26,7 +26,7 @@ if [ ! "$query" ]; then
 fi
 
 sr_args=''
-if [[ "$engine" == "docsrs" && "${query:0:1}" == '!' ]]; then
+if [[ ("$engine" == "docsrs" || "$engine" == "crates.io") && "${query:0:1}" == '!' ]]; then
     sr_args+='-exact'
     query=${query:1}
 fi
