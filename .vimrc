@@ -56,9 +56,8 @@ Plug 'vim-scripts/mako.vim'         " Mako plugins
 Plug 'craigemery/vim-autotag'
 Plug 'wincent/ferret'
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
-Plug 'leafgarland/typescript-vim'
-Plug 'Quramy/tsuquyomi'
 Plug 'saltstack/salt-vim'
+Plug 'leafgarland/typescript-vim'
 
 if executable('rustup') == 1
     Plug 'racer-rust/vim-racer'         " Rust autocomplete
@@ -191,7 +190,7 @@ autocmd FileType gitcommit set spell |
 autocmd FileType c setlocal tabstop=8 softtabstop=8 shiftwidth=8 noexpandtab
 
 " typescript
-autocmd FileType typescript setlocal completeopt+=menu,preview
+"autocmd FileType typescript setlocal completeopt+=menu,preview
 " }}}
 
 " Airline ---------------------- {{{
@@ -522,9 +521,6 @@ if str2nr(output) == 1
 endif
 let g:tex_flavor='latex'
 
-" Use deoplete.
-let g:deoplete#enable_at_startup = 1
-
 " Sy
 let g:signify_vcs_list = ['hg', 'git']
 
@@ -538,4 +534,8 @@ let g:neocomplcache_enable_at_startup = 1
 " Clear search highlighting (without unsetting hlsearch).
 nmap <Leader>- :let @/=""<CR>
 
+" Wrap the current word in curly braces.
+nmap t{ wbi{<Esc>ea}<ESC>i
+nmap t[ wbi[<Esc>ea]<ESC>i
+nmap t( wbi(<Esc>ea)<ESC>i
 " }}}
