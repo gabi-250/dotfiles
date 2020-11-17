@@ -1,10 +1,10 @@
 ! Dark
 
-#define S_base03        #002b36
-#define S_base02        #073642
-#define S_base01        #586e75
-#define S_base00        #657b83
-#define S_base0         #839496
-#define S_base1         #93a1a1
-#define S_base2         #eee8d5
-#define S_base3         #fdf6e3
+#define C_background    #282828
+#define C_foreground    #ebdbb2
+#define C_cursor        #98971a
+#define C_pointer_bg    #586e75
+#define C_base0         #073642
+#define C_base1         #657b83
+#define C_base2         #eee8d5
+#define C_base3         #fdf6e3

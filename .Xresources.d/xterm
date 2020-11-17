@@ -6,7 +6,6 @@
 *selectToClipboard: true
 *loginShell: true
 *vt100*geometry: 80x50
-*boldMode: false
 
 ! urxvt
 URxvt.scrollBar: false
