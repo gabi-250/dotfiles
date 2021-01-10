@@ -119,29 +119,17 @@ else
     set guifont=Monospace\ 11
 endif
 
-" Basic editing sanity
-
-noremap <BS> <Left>X
-inoremap <S-BS> <C-o>db
-noremap <S-BS> db
-inoremap <S-Del> <C-o>dw
-noremap <S-Del> dw
-
 " .vimrc quick open
-
 nnoremap <Leader>ev  :split $MYVIMRC<CR>
 nnoremap <Leader>sov :source $MYVIMRC<CR>
 
 " Spelling
-
 set spelllang=en_us
 
 " Highlight trailing whitespace
-
 match ErrorMsg '\s\+$'
 
 " Uppercase constants
-
 nnoremap <S-U> viwUe
 " }}}
 
@@ -231,10 +219,14 @@ let g:ctrlp_max_files = 0
 let g:ctrlp_clear_cache_on_exit = 0
 let g:ctrlp_custom_ignore = '\.(class|o|rlib|swp|pyc)$|(^|[/\\])\.(hg|git|bzr)($|[/\\])|__init__\.py'
 
-let g:ctrlp_user_command = []
+if executable('rg')
+    set grepprg=rg\ --color=never
+    let g:ctrlp_user_command = 'rg %s --files --color=never --glob ""'
+    let g:ctrlp_use_caching = 0
+else
+    echo "Install ripgrep for better grepping"
+endif
 
-let g:ctrlp_user_command += ['.git', 'cd %s && git ls-files . -co --exclude-standard', 'find %s -type f']
-let g:ctrlp_user_command += ['.hg', 'hg --cwd %s locate -I .']
 nmap <C-b> :CtrlPBuffer<CR>
 imap <C-b> <C-o>:CtrlPBuffer<CR>
 nmap <C-p> :CtrlPMixed<CR>
@@ -304,31 +296,10 @@ let g:tmuxline_preset = {
 " }}}
 
 " Email formatting ---------------------- {{{
-command -range=% -nargs=* EmailFormat <line1>,<line2>!email_format
-
-fun EmailFormatBuffer()
-    let Pos = line2byte( line( "." ) )
-    :EmailFormat
-    exe "goto " . Pos
-endfun
-
-fun InsertFile(f)
-    let p = '~/.vim/' . a:f
-    :exe "read " . p
-endfunction
-
-nnoremap <F2> :call EmailFormatBuffer()<CR>
-vnoremap <F2> :Email_format<CR>
-nnoremap <F3> :call InsertFile('sig_normal')<CR>
-nnoremap <S-F3> :call InsertFile('sig_kings')<CR>
-inoremap <F3> <Esc>:call InsertFile('sig_normal')<CR>
-inoremap <S-F3> <Esc>:call InsertFile('sig_kings')<CR>
-inoremap <f4> <Esc>O<Esc>:call InsertFile('reminder')<CR>
-nnoremap <f4> O<Esc>:call InsertFile('reminder')<CR><Esc>ggJ$a<Left>
 
 " Limit the text width for emails
-
 autocmd BufRead /tmp/mutt-* set tw=72
+
 " }}}
 
 " Racer [auto-complete for Rust] ---------------------- {{{
@@ -466,13 +437,19 @@ nnoremap <C-Up> :LargerFont<CR>
 nnoremap <C-Down> :SmallerFont<CR>
 " }}}
 
-" Other ---------------------- {{{
-" Use ripgrep
+" Ack ---------------------- {{{
+nnoremap <Leader>g :silent Ack!<Space>
+nnoremap <silent> [q :cprevious<CR>
+nnoremap <silent> ]q :cnext<CR>
 
 if executable('rg')
-  let g:ctrlp_user_command = ['rg %s --files --color=never --glob ""']
-  let g:ctrlp_use_caching = 0
+    let g:ackprg="rg --vimgrep --smart-case"
+else
+    echo "Install ripgrep for better grepping"
 endif
+" }}}
+
+" Other ---------------------- {{{
 
 " Don't shuffle the screen and cursor when switching between buffers
 " From http://vim.wikia.com/wiki/Avoid_scrolling_when_switch_buffers
