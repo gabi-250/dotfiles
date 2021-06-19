@@ -109,9 +109,6 @@ if ! shopt -oq posix; then
   fi
 fi
 
-# Rust's cargo
-. ~/.cargo/env
-
 set -o noclobber
 set bell-style none
 export GPG_TTY=$(tty)
