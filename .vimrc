@@ -30,7 +30,7 @@ Plug 'davidhalter/jedi-vim'         " Python auto-complete
 Plug 'tpope/vim-fugitive'           " Git extras
 Plug 'tpope/vim-repeat'
 Plug 'bling/vim-airline'
-Plug 'scrooloose/syntastic'         " Multi-language syntax checker
+Plug 'neomake/neomake'              " Multi-language syntax checker
 Plug 'mhinz/vim-signify'
 Plug 'sjl/gundo.vim'                " Tree of undos
 Plug 'maxbrunsfeld/vim-yankstack'
@@ -43,7 +43,6 @@ Plug 'FelikZ/ctrlp-py-matcher'      " Speeds up CtrlP
 Plug 'ap/vim-css-color'
 Plug 'bling/vim-bufferline'
 Plug 'Lokaltog/vim-easymotion'
-Plug 'rust-lang/rust.vim'
 Plug 'mileszs/ack.vim'
 Plug 'tpope/vim-sleuth'
 Plug 'tpope/vim-endwise'
@@ -184,9 +183,8 @@ autocmd FileType c setlocal tabstop=8 softtabstop=8 shiftwidth=8 noexpandtab
 " Airline ---------------------- {{{
 set laststatus=2
 let g:airline_theme                         = 'gruvbox'
-let g:gruvbox_contrast_light = 'hard'
+let g:gruvbox_contrast_light = 'medium'
 let g:airline#extensions#branch#enabled     = 1
-let g:airline#extensions#syntastic#enabled  = 1
 if !exists('g:airline_symbols')
     let g:airline_symbols = {}
 endif
@@ -391,7 +389,6 @@ endfunction
 
 
 " Default Highlights
-
 nmap <silent> <leader>0 :call HiInterestingWord(0)<cr>
 nmap <silent> <leader>1 :call HiInterestingWord(1)<cr>
 nmap <silent> <leader>2 :call HiInterestingWord(2)<cr>
@@ -401,40 +398,6 @@ nmap <silent> <leader>5 :call HiInterestingWord(5)<cr>
 nmap <silent> <leader>6 :call HiInterestingWord(6)<cr>
 nmap <silent> <leader>7 :call HiInterestingWord(7)<cr>
 nmap <silent> <leader>8 :call HiInterestingWord(8)<cr>
-" }}}
-
-" Font Size ---------------------- {{{
-" Allow the font sizes to be quickly bumped up and down with Ctrl-↑ and Ctrl-↓
-
-let s:pattern = '^\(.* \)\([1-9][0-9]*\)$'
-let s:minfontsize = 6
-let s:maxfontsize = 16
-function! AdjustFontSize(amount)
-  if has("gui") && has("gui_running")
-    let fontname = substitute(&guifont, s:pattern, '\1', '')
-    let cursize = substitute(&guifont, s:pattern, '\2', '')
-    let newsize = cursize + a:amount
-    if (newsize >= s:minfontsize) && (newsize <= s:maxfontsize)
-      let newfont = fontname . newsize
-      let &guifont = newfont
-    endif
-  else
-    echoerr "You need to run the GTK version of Vim to use this function."
-  endif
-endfunction
-
-function! LargerFont()
-  call AdjustFontSize(1)
-endfunction
-command! LargerFont call LargerFont()
-
-function! SmallerFont()
-  call AdjustFontSize(-1)
-endfunction
-command! SmallerFont call SmallerFont()
-
-nnoremap <C-Up> :LargerFont<CR>
-nnoremap <C-Down> :SmallerFont<CR>
 " }}}
 
 " Ack ---------------------- {{{
@@ -447,6 +410,15 @@ if executable('rg')
 else
     echo "Install ripgrep for better grepping"
 endif
+" }}}
+
+" neomake ---------------------- {{{
+
+" When writing a buffer (no delay).
+call neomake#configure#automake('w')
+
+" Don't display inline errors
+let g:neomake_virtualtext_current_error=0
 " }}}
 
 " Other ---------------------- {{{
