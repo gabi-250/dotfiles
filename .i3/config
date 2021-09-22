@@ -212,3 +212,6 @@ bindsym $mod+y exec ~/.i3/scripts/websearch.sh duckduckgo
 
 # toggle the color scheme
 bindsym $mod+F6 exec ~/.i3/scripts/toggle_alacritty_theme.sh
+
+# monitor arrangement
+bindsym $mod+m exec xrandr --output HDMI1 --left-of eDP1
