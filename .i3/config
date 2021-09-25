@@ -201,6 +201,9 @@ bindsym $mod+o exec "i3lock --image=$HOME/Pictures/lock-screen.png --tiling"
 
 exec --no-startup-id xrdb ~/.Xresources
 
+# monitor arrangement
+exec --no-startup-id xrandr --output HDMI1 --primary --mode 2560x1440 --left-of eDP1 --output eDP1 --mode 1920x1080
+
 # search the web
 bindsym $mod+t exec ~/.i3/scripts/websearch.sh
 
@@ -214,4 +217,5 @@ bindsym $mod+y exec ~/.i3/scripts/websearch.sh duckduckgo
 bindsym $mod+F6 exec ~/.i3/scripts/toggle_alacritty_theme.sh
 
 # monitor arrangement
-bindsym $mod+m exec xrandr --output HDMI1 --left-of eDP1
+bindsym $mod+m exec xrandr --output HDMI1 --primary --mode 2560x1440 --left-of eDP1 --output eDP1 --mode 1920x1080
+bindsym $mod+shift+m exec xrandr --auto
