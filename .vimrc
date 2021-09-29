@@ -57,6 +57,7 @@ Plug 'wincent/ferret'
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 Plug 'saltstack/salt-vim'
 Plug 'leafgarland/typescript-vim'
+Plug 'cespare/vim-toml', { 'branch': 'main' }
 
 if executable('rustup') == 1
     Plug 'racer-rust/vim-racer'         " Rust autocomplete
