@@ -22,3 +22,4 @@ if [ -d "$HOME/bin" ] ; then
 fi
 
 export PATH="$HOME/.cargo/bin:$HOME/.firefox:$PATH"
+. "$HOME/.cargo/env"
