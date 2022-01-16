@@ -174,8 +174,7 @@ autocmd FileType gitcommit set spell |
   \ set textwidth=80 |
   \ let &colorcolumn=join(range(81,9999), ',')
 
-" linux kernel style
-autocmd FileType c setlocal tabstop=8 softtabstop=8 shiftwidth=8 noexpandtab
+autocmd FileType c setlocal tabstop=8 softtabstop=4 shiftwidth=4 expandtab
 
 " typescript
 "autocmd FileType typescript setlocal completeopt+=menu,preview
@@ -213,10 +212,14 @@ imap <C-PageDown> <C-o>:bn!<CR>
 let g:ctrlp_by_filename = 0
 let g:ctrlp_regexp = 0
 let g:ctrlp_match_window = 'order:ttb,min:10,max:100,results:100'
-let g:ctrlp_match_func = { 'match': 'pymatcher#PyMatch' }
 let g:ctrlp_max_files = 0
 let g:ctrlp_clear_cache_on_exit = 0
-let g:ctrlp_custom_ignore = '\.(class|o|rlib|swp|pyc)$|(^|[/\\])\.(hg|git|bzr)($|[/\\])|__init__\.py'
+
+if executable('fd')
+    let g:ctrlp_user_command = 'fd --type f --color=never "" %s'
+else
+    echo "Install fd for better finding"
+endif
 
 if executable('rg')
     set grepprg=rg\ --color=never
