@@ -421,7 +421,7 @@ nmap <silent> <leader>8 :call HiInterestingWord(8)<cr>
 " }}}
 
 " Ack ---------------------- {{{
-nnoremap <Leader>g :silent Ack!<Space>
+nnoremap mm :silent Ack!<Space>
 nnoremap <silent> [q :cprevious<CR>
 nnoremap <silent> ]q :cnext<CR>
 
