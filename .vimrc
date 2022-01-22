@@ -12,18 +12,10 @@ if !filereadable(vim_plug)
         silent !wget -O .vim/autoload/plug.vim https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
     elseif executable('curl') == 1
         silent !curl -o .vim/autoload/plug.vim https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-    else
-        let uname=system('uname')
-        if uname =~ "OpenBSD"
-            silent !ftp -o .vim/autoload/plug.vim https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-        else
-            echo "Can't find any suitable program to download vim-plug. Aborting."
-            echo ""
-            exit 1
-        endif
-    endif
+   endif
     let install_plugs=1
 endif
+
 call plug#begin('~/.vim/plugged')
 Plug 'ervandew/supertab'
 Plug 'davidhalter/jedi-vim'         " Python auto-complete
@@ -32,18 +24,13 @@ Plug 'tpope/vim-repeat'
 Plug 'bling/vim-airline'
 Plug 'neomake/neomake'              " Multi-language syntax checker
 Plug 'mhinz/vim-signify'
-Plug 'sjl/gundo.vim'                " Tree of undos
-Plug 'maxbrunsfeld/vim-yankstack'
 Plug 'Shougo/deoplete.nvim'         " Auto-complete
-Plug 'roxma/nvim-yarp'              " Needed for deoplete
-Plug 'roxma/vim-hug-neovim-rpc'     " Needed for deoplete
 Plug 'tpope/vim-sensible'
 Plug 'kien/ctrlp.vim'               " Fuzzy filename matcher
 Plug 'FelikZ/ctrlp-py-matcher'      " Speeds up CtrlP
 Plug 'ap/vim-css-color'
 Plug 'bling/vim-bufferline'
 Plug 'Lokaltog/vim-easymotion'
-Plug 'mileszs/ack.vim'
 Plug 'tpope/vim-sleuth'
 Plug 'tpope/vim-endwise'
 Plug 'morhetz/gruvbox'              " Nice colour scheme
@@ -51,8 +38,6 @@ Plug 'nvie/vim-flake8'
 Plug 'edkolev/tmuxline.vim'
 Plug 'tacahiroy/ctrlp-funky'        " Search for functions in the current file
 Plug 'scrooloose/nerdcommenter'     " Comment / uncomment blocks
-Plug 'vim-scripts/mako.vim'         " Mako plugins
-Plug 'craigemery/vim-autotag'
 Plug 'wincent/ferret'
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 Plug 'saltstack/salt-vim'
@@ -82,7 +67,7 @@ endif
 
 " Basic settings---------------------- {{{
 set number          " Show line numbers
-set mousehide		" Hide the mouse when typing text
+set mousehide       " Hide the mouse when typing text
 set mouse=
 set showmatch
 set incsearch
@@ -128,10 +113,6 @@ set spelllang=en_us
 
 " Highlight trailing whitespace
 match ErrorMsg '\s\+$'
-
-" Uppercase constants
-nnoremap <S-U> viwUe
-" }}}
 
 " Removes trailing spaces ---------------------- {{{
 function! TrimWhiteSpace()
@@ -183,10 +164,10 @@ autocmd FileType c setlocal tabstop=8 softtabstop=4 shiftwidth=4 expandtab
 " Airline ---------------------- {{{
 set laststatus=2
 let g:airline_theme                         = 'gruvbox'
-let g:gruvbox_contrast_light = 'medium'
+let g:gruvbox_contrast_light                = 'medium'
 let g:airline#extensions#branch#enabled     = 1
 if !exists('g:airline_symbols')
-    let g:airline_symbols = {}
+    let g:airline_symbols                   = {}
 endif
 let g:airline_left_sep                      = '▶'
 let g:airline_right_sep                     = '◀'
@@ -239,11 +220,6 @@ imap <C-p> <C-o>:CtrlPMixed<CR>
 nnoremap <C-f> :CtrlPFunky<Cr>
 let g:ctrlp_funky_matchtype = 'path'
 let g:ctrlp_funky_syntax_highlight = 1
-" }}}
-
-" Yankstack -------------------- {{{
-nmap <leader>p <Plug>yankstack_substitute_older_paste
-nmap <leader>P <Plug>yankstack_substitute_newer_paste
 " }}}
 
 " jedi -------------------- {{{
@@ -349,10 +325,10 @@ augroup END
 " }}}
 
 " Persistend undo ---------------------- {{{
-set undofile                " Save undo's after file closes
-set undodir=$HOME/.vim/undo " where to save undo histories
-set undolevels=1000         " How many undos
-set undoreload=10000        " number of lines to save for undo
+set undofile                 " Save undos after file closes
+set undodir=$HOME/.vim/undo  " where to save undo histories
+set undolevels=10000         " How many undos
+set undoreload=100000        " number of lines to save for undo
 " }}}
 
 " Highlight word ---------------------- {{{
@@ -475,12 +451,6 @@ endif
 
 set noeb vb t_vb=
 
-" Update ctags on write
-autocmd BufWritePost *
-      \ if filereadable('tags') |
-      \   call system('ctags -a '.expand('%')) |
-      \ endif
-
 " Ignore temporary directories and swap files
 set wildignore+=*/.git/*,*/tmp/*,*.swp
 
@@ -502,9 +472,4 @@ let g:neocomplcache_enable_at_startup = 1
 
 " Clear search highlighting (without unsetting hlsearch).
 nmap <Leader>- :let @/=""<CR>
-
-" Wrap the current word in curly braces.
-nmap t{ wbi{<Esc>ea}<ESC>i
-nmap t[ wbi[<Esc>ea]<ESC>i
-nmap t( wbi(<Esc>ea)<ESC>i
 " }}}
