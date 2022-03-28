@@ -49,6 +49,7 @@ return require('packer').startup(function(use)
   -- Snippets
   use 'hrsh7th/cmp-nvim-lsp'
   use 'hrsh7th/cmp-vsnip'
+  use 'hrsh7th/vim-vsnip'
   -- Path completion
   use 'hrsh7th/cmp-path'
   use 'hrsh7th/cmp-buffer'

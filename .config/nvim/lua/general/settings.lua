@@ -28,9 +28,11 @@ vim.o.undofile = true
 -- where to save undo histories
 vim.o.undodir = '$HOME/.vim/undo'
 -- How many undos
-vim.o.undolevels = 10000         
+vim.o.undolevels = 10000
 -- number of lines to save for undo
-vim.o.undoreload = 100000 
+vim.o.undoreload = 100000
+-- Always show the sign column
+vim.o.signcolumn = 'yes'
 
 if vim.fn.executable('rg') then
     vim.o.grepprg = 'rg --color=never'
