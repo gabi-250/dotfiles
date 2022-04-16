@@ -1,3 +1,5 @@
+" NOTE: Old and unmaintained - see nvim config instead
+
 " Plugins ---------------------- {{{
 let install_plugs=0
 let vim_plug=expand('~/.vim/autoload/plug.vim')

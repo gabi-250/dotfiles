@@ -26,7 +26,7 @@ vim.cmd [[syntax enable]]
 -- Save undos after file closes
 vim.o.undofile = true
 -- where to save undo histories
-vim.o.undodir = '$HOME/.vim/undo'
+vim.o.undodir = '${HOME}/.vim/undo'
 -- How many undos
 vim.o.undolevels = 10000
 -- number of lines to save for undo
