@@ -21,6 +21,10 @@ return require('packer').startup(function(use)
   use 'tpope/vim-repeat'
   -- Fuzzy file name matcher
   use 'kien/ctrlp.vim'
+  use {
+    'nvim-telescope/telescope.nvim',
+    requires = { {'nvim-lua/plenary.nvim'} }
+  }
   -- Syntax highlighting
   --use 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
   use 'saltstack/salt-vim'

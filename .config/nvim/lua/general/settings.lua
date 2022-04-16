@@ -37,3 +37,11 @@ vim.o.signcolumn = 'yes'
 if vim.fn.executable('rg') then
     vim.o.grepprg = 'rg --color=never'
 end
+
+-- Highlight yanked text
+vim.cmd([[
+augroup highlight_yank
+  autocmd!
+  autocmd TextYankPost * silent! lua require'vim.highlight'.on_yank({timeout=1000})
+augroup END
+]])
