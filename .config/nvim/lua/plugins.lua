@@ -15,7 +15,6 @@ return require('packer').startup(function(use)
   -- Cosmetic
   use '/morhetz/gruvbox'
   use 'bling/vim-airline'
-  use 'bling/vim-bufferline'
   use 'edkolev/tmuxline.vim'
   -- Improve the `.` repeat command.
   use 'tpope/vim-repeat'
