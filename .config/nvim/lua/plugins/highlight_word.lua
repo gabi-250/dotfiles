@@ -1,66 +1,61 @@
--- TODO: rewrite this in lua
-vim.api.nvim_exec([[
-" Highlight word ---------------------- {{{
-" Highlight Word, initial version from:
-"   https://gist.github.com/emilyst/9243544#file-vimrc-L142
-"
-" This mini-plugin provides a few mappings for highlighting words temporarily.
-"
-" \0 unsets all highlighting
-function! HiInterestingWord(n)
-    hi def HiInterestingWord1 guifg=#000000 ctermfg=16  guibg=#ffa724 ctermbg=214
-    hi def HiInterestingWord2 guifg=#000000 ctermfg=16  guibg=#aeee00 ctermbg=154
-    hi def HiInterestingWord3 guifg=#000000 ctermfg=16  guibg=#8cffba ctermbg=121
-    hi def HiInterestingWord4 guifg=#000000 ctermfg=16  guibg=#b88853 ctermbg=137
-    hi def HiInterestingWord5 guifg=#000000 ctermfg=16  guibg=#ff9eb8 ctermbg=211
-    hi def HiInterestingWord6 guifg=#000000 ctermfg=16  guibg=#ff2c4b ctermbg=195
-    hi def HiInterestingWord7 guifg=#000000 ctermfg=16  guibg=#ffffff ctermbg=231
-    hi def HiInterestingWord8 guifg=#ffffff ctermfg=231 guibg=#000000 ctermbg=16
+vim.api.nvim_set_hl(0, 'InterestingWord1', { fg = '#000000', ctermfg = 16, bg = '#ffa724', ctermbg = 214 })
+vim.api.nvim_set_hl(0, 'InterestingWord2', { fg = '#000000', ctermfg = 16, bg = '#aeee00', ctermbg = 154 })
+vim.api.nvim_set_hl(0, 'InterestingWord3', { fg = '#000000', ctermfg = 16, bg = '#8cffba', ctermbg = 121 })
+vim.api.nvim_set_hl(0, 'InterestingWord4', { fg = '#000000', ctermfg = 16, bg = '#b88853', ctermbg = 137 })
+vim.api.nvim_set_hl(0, 'InterestingWord5', { fg = '#000000', ctermfg = 16, bg = '#ff9eb8', ctermbg = 211 })
+vim.api.nvim_set_hl(0, 'InterestingWord6', { fg = '#000000', ctermfg = 16, bg = '#ff2c4b', ctermbg = 195 })
+vim.api.nvim_set_hl(0, 'InterestingWord7', { fg = '#000000', ctermfg = 16, bg = '#ffffff', ctermbg = 231 })
+vim.api.nvim_set_hl(0, 'InterestingWord8', { fg = '#ffffff', ctermfg = 231, bg = '#000000', ctermbg = 16 })
 
-    " HiInterestingWord(0) clears all the matches, including the general
-    " search highlighting.
-    if a:n == 0
-        let i = 1
-        while i <= 6
-            let mid = 86750 + i
-            silent! call matchdelete(mid)
-            let i += 1
-        endwhile
-        set hlsearch!
+-- Highlight Word, initial Vimscript version from:
+--   https://gist.github.com/emilyst/9243544#file-vimrc-L142
+--
+-- This mini-plugin provides a few mappings for highlighting words temporarily.
+--
+-- \0 unsets all highlighting
+function hi_interesting_word(n)
+    local match_id_base = 86750
+    -- hi_interesting_word(0) clears all the matches, including the general
+    -- search highlighting.
+    if n == 0 then
+        i = 1
+        while i <= 8 do
+            local mid = match_id_base + i
+            pcall(vim.fn.matchdelete, mid)
+            i = i + 1
+        end
+        vim.api.nvim_exec('set hlsearch!', false)
         return
-    endif
+    end
 
-    " Save our location.
-    normal! mz
+    -- Save our location.
+    vim.api.nvim_feedkeys('mz', 'x', true)
 
-    " Yank the current word into the z register.
-    normal! "zyiw
+    -- Yank the current word into the z register.
+    vim.api.nvim_feedkeys([["zyiw]], 'x', true)
 
-    " Calculate an arbitrary match ID.  Hopefully nothing else is using it.
-    let mid = 86750 + a:n
+    -- Calculate an arbitrary match ID. Hopefully nothing else is using it.
+    local mid = match_id_base + n
 
-    " Clear existing matches, but don't worry if they don't exist.
-    silent! call matchdelete(mid)
+    -- Clear existing matches, but don't worry if they don't exist.
+    pcall(vim.fn.matchdelete, mid)
 
-    " Construct a literal pattern that has to match at boundaries.
-    let pat = '\V\<' . escape(@z, '\') . '\>'
+    -- Construct a literal pattern that has to match at boundaries.
+    local pat = [[\V\<]] .. vim.fn.escape(vim.fn.getreg('z'), [[\]]) .. [[\>]]
 
-    " Actually match the words.
-    call matchadd('HiInterestingWord' . a:n, pat, 1, mid)
+    -- Actually match the words.
+    vim.fn.matchadd('InterestingWord' .. n, pat, 1, mid)
 
-    " Move back to our original location.
-    normal! `z
-endfunction
+    -- Move back to our original location.
+    vim.api.nvim_feedkeys('`z', 'x', true)
+end
 
-
-" Default Highlights
-nmap <silent> <leader>0 :call HiInterestingWord(0)<cr>
-nmap <silent> <leader>1 :call HiInterestingWord(1)<cr>
-nmap <silent> <leader>2 :call HiInterestingWord(2)<cr>
-nmap <silent> <leader>3 :call HiInterestingWord(3)<cr>
-nmap <silent> <leader>4 :call HiInterestingWord(4)<cr>
-nmap <silent> <leader>5 :call HiInterestingWord(5)<cr>
-nmap <silent> <leader>6 :call HiInterestingWord(6)<cr>
-nmap <silent> <leader>7 :call HiInterestingWord(7)<cr>
-nmap <silent> <leader>8 :call HiInterestingWord(8)<cr>
-]], false)
+vim.api.nvim_set_keymap('n', '<Leader>0', [[<cmd>lua hi_interesting_word(0)<CR>]], {})
+vim.api.nvim_set_keymap('n', '<Leader>1', [[<cmd>lua hi_interesting_word(1)<CR>]], {})
+vim.api.nvim_set_keymap('n', '<Leader>2', [[<cmd>lua hi_interesting_word(2)<CR>]], {})
+vim.api.nvim_set_keymap('n', '<Leader>3', [[<cmd>lua hi_interesting_word(3)<CR>]], {})
+vim.api.nvim_set_keymap('n', '<Leader>4', [[<cmd>lua hi_interesting_word(4)<CR>]], {})
+vim.api.nvim_set_keymap('n', '<Leader>5', [[<cmd>lua hi_interesting_word(5)<CR>]], {})
+vim.api.nvim_set_keymap('n', '<Leader>6', [[<cmd>lua hi_interesting_word(6)<CR>]], {})
+vim.api.nvim_set_keymap('n', '<Leader>7', [[<cmd>lua hi_interesting_word(7)<CR>]], {})
+vim.api.nvim_set_keymap('n', '<Leader>8', [[<cmd>lua hi_interesting_word(8)<CR>]], {})
