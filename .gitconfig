@@ -1,0 +1,14 @@
+[user]
+	name = Gabi Moldovan
+	email = gabi_250@live.com
+	signingkey = 8F56AA5800BA4E2325EFFCC83946E0ADE72BAC99
+[init]
+	defaultBranch = master
+[rebase]
+	autoStash = true
+[pull]
+	rebase = true
+[rerere]
+	enabled = true
+[commit]
+	gpgSign = true
