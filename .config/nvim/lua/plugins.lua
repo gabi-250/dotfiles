@@ -56,6 +56,11 @@ return require('packer').startup(function(use)
   -- Path completion
   use 'hrsh7th/cmp-path'
   use 'hrsh7th/cmp-buffer'
+  -- Treesitter
+  use {
+    'nvim-treesitter/nvim-treesitter',
+    run = ':TSUpdate'
+  }
 
   if packer_bootstrap then
     require('packer').sync()
