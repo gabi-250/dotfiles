@@ -219,3 +219,6 @@ bindsym $mod+F6 exec ~/.i3/scripts/toggle_alacritty_theme.sh
 # monitor arrangement
 bindsym $mod+m exec xrandr --output HDMI1 --primary --mode 2560x1440 --left-of eDP1 --output eDP1 --mode 1920x1080
 bindsym $mod+shift+m exec xrandr --auto
+
+# tmux session cleanup
+bindsym $mod+c exec tmux list-session | grep -v attached | awk -F ':' '{print $1}' | xargs -n 1 tmux kill-session -t
