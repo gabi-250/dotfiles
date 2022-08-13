@@ -221,4 +221,4 @@ bindsym $mod+m exec xrandr --output HDMI1 --primary --mode 2560x1440 --left-of e
 bindsym $mod+shift+m exec ~/.i3/scripts/disable-monitor.sh
 
 # tmux session cleanup
-bindsym $mod+c exec tmux list-session | grep -v attached | awk -F ':' '{print $1}' | xargs -n 1 tmux kill-session -t
+bindsym $mod+x exec tmux list-session | rg -v attached | awk -F ':' '{print $1}' | xargs -r -n 1 tmux kill-session -t
