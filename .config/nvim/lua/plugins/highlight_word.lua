@@ -1,11 +1,15 @@
-vim.api.nvim_set_hl(0, 'InterestingWord1', { fg = '#000000', ctermfg = 16, bg = '#ffa724', ctermbg = 214 })
-vim.api.nvim_set_hl(0, 'InterestingWord2', { fg = '#000000', ctermfg = 16, bg = '#aeee00', ctermbg = 154 })
-vim.api.nvim_set_hl(0, 'InterestingWord3', { fg = '#000000', ctermfg = 16, bg = '#8cffba', ctermbg = 121 })
-vim.api.nvim_set_hl(0, 'InterestingWord4', { fg = '#000000', ctermfg = 16, bg = '#b88853', ctermbg = 137 })
-vim.api.nvim_set_hl(0, 'InterestingWord5', { fg = '#000000', ctermfg = 16, bg = '#ff9eb8', ctermbg = 211 })
-vim.api.nvim_set_hl(0, 'InterestingWord6', { fg = '#000000', ctermfg = 16, bg = '#ff2c4b', ctermbg = 195 })
-vim.api.nvim_set_hl(0, 'InterestingWord7', { fg = '#000000', ctermfg = 16, bg = '#ffffff', ctermbg = 231 })
-vim.api.nvim_set_hl(0, 'InterestingWord8', { fg = '#ffffff', ctermfg = 231, bg = '#000000', ctermbg = 16 })
+function hi_interesting_word_init()
+    vim.api.nvim_set_hl(0, 'InterestingWord1', { fg = '#000000', ctermfg = 16, bg = '#ffa724', ctermbg = 214 })
+    vim.api.nvim_set_hl(0, 'InterestingWord2', { fg = '#000000', ctermfg = 16, bg = '#aeee00', ctermbg = 154 })
+    vim.api.nvim_set_hl(0, 'InterestingWord3', { fg = '#000000', ctermfg = 16, bg = '#8cffba', ctermbg = 121 })
+    vim.api.nvim_set_hl(0, 'InterestingWord4', { fg = '#000000', ctermfg = 16, bg = '#b88853', ctermbg = 137 })
+    vim.api.nvim_set_hl(0, 'InterestingWord5', { fg = '#000000', ctermfg = 16, bg = '#ff9eb8', ctermbg = 211 })
+    vim.api.nvim_set_hl(0, 'InterestingWord6', { fg = '#000000', ctermfg = 16, bg = '#ff2c4b', ctermbg = 195 })
+    vim.api.nvim_set_hl(0, 'InterestingWord7', { fg = '#000000', ctermfg = 16, bg = '#ffffff', ctermbg = 231 })
+    vim.api.nvim_set_hl(0, 'InterestingWord8', { fg = '#ffffff', ctermfg = 231, bg = '#000000', ctermbg = 16 })
+end
+
+hi_interesting_word_init()
 
 -- Highlight Word, initial Vimscript version from:
 --   https://gist.github.com/emilyst/9243544#file-vimrc-L142

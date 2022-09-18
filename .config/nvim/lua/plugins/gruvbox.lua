@@ -11,6 +11,9 @@ function toggle_background()
     else
         vim.o.background = 'dark'
     end
+    -- Make sure the highlight groups are preserved after changing the
+    -- color scheme.
+    hi_interesting_word_init()
 end
 
 vim.api.nvim_set_keymap('n', '<F6>', '<cmd>lua toggle_background()<CR>', { silent = true })
