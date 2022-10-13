@@ -112,7 +112,10 @@ fi
 set -o noclobber
 set bell-style none
 export GPG_TTY=$(tty)
-xrdb ~/.Xresources
+
+if [ -x "$(command -v xrdb)" ]; then
+    xrdb ~/.Xresources
+fi
 
 if [ -n "$DISPLAY" ]; then
   xset b off
