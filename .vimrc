@@ -200,6 +200,8 @@ let g:ctrlp_clear_cache_on_exit = 0
 
 if executable('fd')
     let g:ctrlp_user_command = 'fd --type f --color=never "" %s'
+elseif executable('fdfind')
+    let g:ctrlp_user_command = 'fdfind --type f --color=never "" %s'
 else
     echo "Install fd for better finding"
 endif
