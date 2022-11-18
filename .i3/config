@@ -29,6 +29,9 @@ floating_modifier $mod
 # Start a terminal
 bindsym $mod+Return exec alacritty -e bash -c "tmux -2 new-session"
 
+# Start a terminal (without tmux)
+bindsym $mod+backslash exec alacritty -e bash -c "fish"
+
 # kill focused window
 bindsym $mod+Shift+q kill
 
