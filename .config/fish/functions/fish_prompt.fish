@@ -18,12 +18,11 @@ end
 
 function fish_right_prompt -d "Write out the right prompt"
     set -l lightgray (set_color 6C6C6C)
-    echo -n $lightgray(date '+%H:%M:%S')
+    set -l time $lightgray(date '+%H:%M:%S')
     set -l duration (math --scale=0 "$CMD_DURATION / 1000")
+
+    printf '%s\n' $time
     if test $duration -gt 0
-        echo -n "("$duration"s) "
-    else
-        echo -n " "
+        printf " (%ss)" $duration
     end
-    set -l darkred (set_color cc241d)
 end
