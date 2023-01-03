@@ -231,6 +231,9 @@ bindsym $mod+shift+m exec ~/.i3/scripts/disable-monitor.sh
 # tmux session cleanup
 bindsym $mod+x exec tmux list-session | rg -v attached | awk -F ':' '{print $1}' | xargs -r -n 1 tmux kill-session -t
 
+# generate a random secret
+bindsym $mod+shift+g exec ~/.i3/scripts/mint-named-secret.sh
+
 # copy a secret to clipboard
 bindsym $mod+c exec ~/.i3/scripts/grab-secret.sh
 

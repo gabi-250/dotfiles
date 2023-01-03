@@ -1,0 +1,34 @@
+#!/bin/bash
+
+set -eou pipefail
+
+readonly secrets_dir=$HOME/.secrets
+readonly prerequisites=(gpg pwgen)
+
+ensure_installed() (
+    for cmd in "$@"; do
+        if ! [ -x "$(command -v "$cmd" -q)" ]; then
+            echo "$cmd not found. Please install $cmd before running this script" >&2
+            exit 1
+        fi
+    done
+)
+
+usage() {
+    cat <<EOF
+Usage: $0 NAME LENGTH
+
+Generate a random secret and store it (in encrypted form) in $secrets_dir.
+EOF
+
+    exit 1
+}
+
+[[ ${2:-} ]] || usage
+name=$1
+length=$2
+
+ensure_installed "${prerequisites[@]}"
+
+# Generate a random secret and encrypt it
+pwgen -n -y $length 1 | gpg --encrypt --recipient gabi@gotpcrel.net -o ~/.secrets/$name.gpg

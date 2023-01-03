@@ -2,9 +2,9 @@
 
 set -eou pipefail
 
-SECRETS=$HOME/.secrets
-PREREQUISITES=(gpg xclip)
-SLEEP_SECONDS=10
+readonly secrets_dir=$HOME/.secrets
+readonly prerequisites=(gpg xclip)
+readonly sleep_seconds=10
 
 ensure_installed() (
     for cmd in "$@"; do
@@ -15,14 +15,14 @@ ensure_installed() (
     done
 )
 
-ensure_installed "${PREREQUISITES[@]}"
+ensure_installed "${prerequisites[@]}"
 
 # List all available secrets
-secret=$(ls $SECRETS | awk -F '.' '{ print $1 }' | dmenu)
+secret=$(ls $secrets_dir | awk -F '.' '{ print $1 }' | dmenu)
 
 # Decrypt the secret
-echo $(gpg --decrypt $SECRETS/$secret.gpg 2>/dev/null) | xclip -in
+echo $(gpg --decrypt $secrets_dir/$secret.gpg 2>/dev/null) | xclip -in
 # Wait for a few seconds...
-sleep $SLEEP_SECONDS
+sleep $sleep_seconds
 # ...and then clear the clipboard
 xclip -i /dev/null
