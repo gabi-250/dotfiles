@@ -4,6 +4,7 @@ set -eou pipefail
 
 readonly secrets_dir=$HOME/.secrets
 readonly prerequisites=(gpg pwgen)
+readonly notification_timeout_ms=4000
 
 ensure_installed() (
     for cmd in "$@"; do
@@ -32,3 +33,4 @@ ensure_installed "${prerequisites[@]}"
 
 # Generate a random secret and encrypt it
 pwgen -n -y $length 1 | gpg --encrypt --recipient gabi@gotpcrel.net -o ~/.secrets/$name.gpg
+notify-send "Secret '$name' successfully created" --expire-time=$notification_timeout_ms

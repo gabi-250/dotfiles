@@ -5,6 +5,7 @@ set -eou pipefail
 readonly secrets_dir=$HOME/.secrets
 readonly prerequisites=(gpg xclip)
 readonly sleep_seconds=10
+readonly notification_timeout_ms=4000
 
 ensure_installed() (
     for cmd in "$@"; do
@@ -22,7 +23,13 @@ secret=$(ls $secrets_dir | awk -F '.' '{ print $1 }' | dmenu)
 
 # Decrypt the secret
 echo $(gpg --decrypt $secrets_dir/$secret.gpg 2>/dev/null) | xclip -in
+notify-send "Secret '$secret' copied to clipboard" \
+    --expire-time=$notification_timeout_ms \
+    --urgency=critical \
+
 # Wait for a few seconds...
 sleep $sleep_seconds
+
 # ...and then clear the clipboard
 xclip -i /dev/null
+notify-send "Clipboard cleared" --expire-time=$notification_timeout_ms
