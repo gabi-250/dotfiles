@@ -19,7 +19,7 @@ ensure_installed() (
 ensure_installed "${prerequisites[@]}"
 
 # List all available secrets
-secret=$(ls $secrets_dir | awk -F '.' '{ print $1 }' | dmenu)
+secret=$(ls $secrets_dir/*.gpg | xargs -n 1 basename -s .gpg | dmenu)
 
 # Decrypt the secret
 echo $(gpg --decrypt $secrets_dir/$secret.gpg 2>/dev/null) | xclip -in
