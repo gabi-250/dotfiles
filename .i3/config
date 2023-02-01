@@ -9,9 +9,6 @@
 #
 # Please see http://i3wm.org/docs/userguide.html for a complete reference!
 
-# Swap the alt and super keys
-exec setxkbmap -option altwin:swap_alt_win
-
 set $mod Mod4
 
 # Font for window titles. Will also be used by the bar unless a different font
