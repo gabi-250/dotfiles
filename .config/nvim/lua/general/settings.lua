@@ -22,7 +22,6 @@ vim.o.autoindent = true
 vim.o.smartindent = true
 vim.o.display = 'lastline'
 vim.o.lazyredraw = true
-vim.cmd [[syntax enable]]
 -- Save undos after file closes
 vim.o.undofile = true
 -- where to save undo histories

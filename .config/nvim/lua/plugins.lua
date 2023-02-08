@@ -64,6 +64,8 @@ return require('packer').startup(function(use)
     run = ':TSUpdate'
   }
   use 'nvim-treesitter/nvim-treesitter-context'
+  -- editorconfig support
+  use 'gpanders/editorconfig.nvim'
 
   if packer_bootstrap then
     require('packer').sync()

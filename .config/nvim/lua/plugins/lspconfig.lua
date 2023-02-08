@@ -16,6 +16,10 @@ require'lspconfig'.rust_analyzer.setup({
     }
 })
 
+require'lspconfig'.clangd.setup({
+    capabilities=capabilities,
+})
+
 -- Enable diagnostics
 vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
   vim.lsp.diagnostic.on_publish_diagnostics, {
