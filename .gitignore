@@ -10,3 +10,5 @@ Session.vim
 tags
 # auto-generated packer file
 .config/nvim/plugin/packer_compiled.lua
+# weechat config stuff
+.weechat/sec.conf
