@@ -67,6 +67,12 @@ return require('packer').startup(function(use)
   -- editorconfig support
   use 'gpanders/editorconfig.nvim'
 
+  -- Onion
+  use {
+    'https://gitlab.torproject.org/ahf/onion-vim',
+    branch = 'main'
+  }
+
   if packer_bootstrap then
     require('packer').sync()
   end
