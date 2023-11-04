@@ -2,8 +2,8 @@
 	name = Gabi Moldovan
 	email = gabi@gotpcrel.net
 	signingkey = 8F56AA5800BA4E2325EFFCC83946E0ADE72BAC99
-[init]
-	defaultBranch = master
+[fetch]
+	prune = true
 [rebase]
 	autoStash = true
 [pull]
@@ -11,6 +11,6 @@
 [rerere]
 	enabled = true
 [commit]
-	gpgSign = true
-[gpg]
-	program = gpg2
+	gpgSign = false
+[include]
+	path = ~/.gitconfig.local
