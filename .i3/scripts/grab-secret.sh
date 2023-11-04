@@ -22,7 +22,7 @@ ensure_installed "${prerequisites[@]}"
 secret=$(ls $secrets_dir/*.gpg | xargs -n 1 basename -s .gpg | dmenu)
 
 # Decrypt the secret
-echo $(gpg --decrypt $secrets_dir/$secret.gpg 2>/dev/null) | xclip -in
+echo $(gpg --decrypt $secrets_dir/$secret.gpg 2>/dev/null) | xclip -in -selection clipboard
 notify-send "Secret '$secret' copied to clipboard" \
     --expire-time=$notification_timeout_ms \
     --urgency=critical \
