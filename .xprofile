@@ -1,4 +1,8 @@
 #!/bin/sh
 
 # Swap the alt and super keys
+#
+# These are swapped because I want the i3 MOD key to be alt and the weechat meta
+# key to be win (the meta key doesn't seem to be configurable in weechat, which
+# leaves me no choice but to swap the keys like so)
 setxkbmap -option altwin:swap_alt_win
