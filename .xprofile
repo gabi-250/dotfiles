@@ -1,0 +1,4 @@
+#!/bin/sh
+
+# Swap the alt and super keys
+setxkbmap -option altwin:swap_alt_win
