@@ -3,10 +3,12 @@
 #
 # Based on https://github.com/morhetz/gruvbox
 
+# Reset the default settings
 *.default=true
-*.selected.bg="#665c54"
-*.selected.fg="#fbf1c7"
+*.normal=true
+
 *.selected.bold=true
+msglist_*.selected.reverse=true
 
 title.bold=true
 title.bg="#665c54"
@@ -22,17 +24,23 @@ border.bg="#928374"
 stack.bg="#928374"
 spinner.fg="#fbf1c7"
 
-statusline_default.bg="#928374"
+statusline_default.bg="#a89984"
 statusline_error.fg="#cc241d"
 statusline_error.reverse=true
 
 msglist_unread.bold=true
-msglist_unread.fg="#8ec07c"
+msglist_unread.fg="#427b58"
 
 completion_pill.reverse=true
 
-tab.bg="#928374"
-tab.selected.bg="#665c54"
+tab.bg="#a89984"
+tab.fg="#282828"
+tab.selected.fg="#fbf1c7"
+tab.selected.bg="#3c3836"
+
+dirlist.selected.fg="#fbf1c7"
+dirlist.selected.bg="#3c3836"
+dirlist.bg="#bdae93"
 
 selector_focused.reverse=true
 selector_chooser.bold=true
