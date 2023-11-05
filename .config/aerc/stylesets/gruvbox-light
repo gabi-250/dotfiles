@@ -40,7 +40,7 @@ tab.selected.bg="#3c3836"
 
 dirlist.selected.fg="#fbf1c7"
 dirlist.selected.bg="#3c3836"
-dirlist.bg="#bdae93"
+dirlist.bg="#ebdbb2"
 
 selector_focused.reverse=true
 selector_chooser.bold=true
