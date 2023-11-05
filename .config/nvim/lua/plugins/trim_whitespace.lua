@@ -1,11 +1,18 @@
 -- Highlight trailing whitespace
 vim.fn.matchadd('errorMsg', [[\s\+$]])
 
--- Removes trailing spaces 
+-- Decides whether to allow space trimming
+function toggle_trim_whitespace()
+  vim.b.do_not_trim_whitespace = not vim.b.do_not_trim_whitespace
+end
+
+-- Removes trailing spaces
 function trim_whitespace()
-  vim.api.nvim_exec([[
-      %s/\s\+$//e
-  ]], false)
+  if not vim.b.do_not_trim_whitespace then
+    vim.api.nvim_exec([[
+        %s/\s\+$//e
+    ]], false)
+  end
 end
 
 vim.api.nvim_exec([[
@@ -16,3 +23,7 @@ vim.api.nvim_exec([[
       autocmd BufWritePre     * :lua trim_whitespace()
   augroup END
 ]], false)
+
+vim.api.nvim_set_keymap('n', '<F7>', '<cmd>lua toggle_trim_whitespace()<CR>', { silent = true })
+vim.api.nvim_set_keymap('i', '<F7>', '<cmd>lua toggle_trim_whitespace()<CR>', { silent = true })
+vim.api.nvim_set_keymap('v', '<F7>', '<cmd>lua toggle_trim_whitespace()<CR>', { silent = true })
