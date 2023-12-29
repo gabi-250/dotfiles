@@ -31,6 +31,13 @@ length=$2
 
 ensure_installed "${prerequisites[@]}"
 
+if [[ -f $secrets_dir/$name.gpg ]]; then
+    notify-send "Secret not created: '$name.gpg' already exists" \
+        --expire-time=$notification_timeout_ms \
+        --urgency=critical
+    exit 1
+fi
+
 # Generate a random secret and encrypt it
 pwgen -n -y $length 1 | gpg --encrypt --recipient gabi@gotpcrel.net -o $secrets_dir/$name.gpg
 notify-send "Secret '$name' successfully created" --expire-time=$notification_timeout_ms
