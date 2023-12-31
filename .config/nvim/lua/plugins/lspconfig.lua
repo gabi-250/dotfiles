@@ -1,8 +1,13 @@
+local status_ok, lspconfig = pcall(require, "lspconfig")
+if not status_ok then
+  return
+end
+
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities.textDocument.completion.completionItem.snippetSupport = true
 
 -- Enable rust_analyzer
-require'lspconfig'.rust_analyzer.setup({
+lspconfig.rust_analyzer.setup({
   capabilities=capabilities,
   settings = {
     -- to enable rust-analyzer settings visit:
@@ -22,7 +27,7 @@ require'lspconfig'.rust_analyzer.setup({
   }
 })
 
-require'lspconfig'.clangd.setup({
+lspconfig.clangd.setup({
   capabilities=capabilities,
 })
 

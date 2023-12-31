@@ -24,7 +24,7 @@ return require('packer').startup(function(use)
   use 'kien/ctrlp.vim'
   use {
     'nvim-telescope/telescope.nvim',
-    requires = { {'nvim-lua/plenary.nvim'} }
+    requires = { {'nvim-lua/plenary.nvim'} },
   }
   -- Syntax highlighting
   --use 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
