@@ -1,17 +1,19 @@
-local install_path = vim.fn.stdpath('data')..'/site/pack/packer/start/packer.nvim'
-if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
-  packer_bootstrap = vim.fn.system({'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path})
+-- See https://github.com/wbthomason/packer.nvim#bootstrapping
+local ensure_packer = function()
+  local fn = vim.fn
+  local install_path = fn.stdpath('data')..'/site/pack/packer/start/packer.nvim'
+  if fn.empty(fn.glob(install_path)) > 0 then
+    fn.system({'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path})
+    vim.cmd [[packadd packer.nvim]]
+    return true
+  end
+  return false
 end
 
-vim.cmd([[
-  augroup packer_user_config
-    autocmd!
-    autocmd BufWritePost plugins.lua source <afile> | PackerCompile
-  augroup end
-]])
+local packer_bootstrap = ensure_packer()
 
-local use = require('packer').use
 return require('packer').startup(function(use)
+  use 'wbthomason/packer.nvim'
   -- Cosmetic
   use '/morhetz/gruvbox'
   use 'bling/vim-airline'
@@ -73,6 +75,7 @@ return require('packer').startup(function(use)
     branch = 'main'
   }
 
+  -- Clone packer.nvim if needed
   if packer_bootstrap then
     require('packer').sync()
   end
