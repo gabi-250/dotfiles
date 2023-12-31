@@ -15,8 +15,8 @@ local packer_bootstrap = ensure_packer()
 return require('packer').startup(function(use)
   use 'wbthomason/packer.nvim'
   -- Cosmetic
-  use '/morhetz/gruvbox'
-  use 'bling/vim-airline'
+  use { '/morhetz/gruvbox', config = 'vim.cmd [[colorscheme gruvbox]]' }
+  use { 'bling/vim-airline', after = 'gruvbox' }
   use 'edkolev/tmuxline.vim'
   -- Improve the `.` repeat command.
   use 'tpope/vim-repeat'

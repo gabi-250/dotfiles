@@ -1,5 +1,3 @@
-vim.cmd [[colorscheme gruvbox]]
-
 vim.o.background = 'light'
 vim.o.termguicolors = true
 
