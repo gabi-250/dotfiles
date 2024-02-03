@@ -2,10 +2,10 @@
 
 set -eou pipefail
 
-readonly ALACRITTY_CONFIG=~/.alacritty.yml
-readonly ALACRITTY_COLORS=~/.config/alacritty/colors.yml
-readonly ALACRITTY_LIGHT=~/.config/alacritty/colors-light.yml
-readonly ALACRITTY_DARK=~/.config/alacritty/colors-dark.yml
+readonly ALACRITTY_CONFIG=~/.alacritty.toml
+readonly ALACRITTY_COLORS=~/.config/alacritty/colors.toml
+readonly ALACRITTY_LIGHT=~/.config/alacritty/colors-light.toml
+readonly ALACRITTY_DARK=~/.config/alacritty/colors-dark.toml
 
 readonly AERC_COLORS=~/.config/aerc/stylesets/gruvbox
 readonly AERC_LIGHT=~/.config/aerc/stylesets/gruvbox-light
