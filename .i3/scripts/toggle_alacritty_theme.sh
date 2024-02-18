@@ -17,6 +17,9 @@ if [[ `readlink -f $ALACRITTY_COLORS` == `readlink -f $ALACRITTY_LIGHT` ]]; then
 elif [[ `readlink -f $ALACRITTY_COLORS` == `readlink -f $ALACRITTY_DARK` ]]; then
     ln -fs $ALACRITTY_LIGHT $ALACRITTY_COLORS
     ln -fs $AERC_LIGHT $AERC_COLORS
+else
+    ln -fs $ALACRITTY_LIGHT $ALACRITTY_COLORS
+    ln -fs $AERC_LIGHT $AERC_COLORS
 fi
 
 touch $ALACRITTY_CONFIG
