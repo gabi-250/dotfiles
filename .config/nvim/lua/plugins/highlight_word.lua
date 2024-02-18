@@ -9,8 +9,6 @@ function hi_interesting_word_init()
     vim.api.nvim_set_hl(0, 'InterestingWord8', { fg = '#ffffff', ctermfg = 231, bg = '#000000', ctermbg = 16 })
 end
 
-hi_interesting_word_init()
-
 -- Highlight Word, initial Vimscript version from:
 --   https://gist.github.com/emilyst/9243544#file-vimrc-L142
 --
@@ -18,6 +16,8 @@ hi_interesting_word_init()
 --
 -- \0 unsets all highlighting
 function hi_interesting_word(n)
+    -- XXX This doesn't really belong here (it should only be called once)
+    hi_interesting_word_init()
     local match_id_base = 86750
     -- hi_interesting_word(0) clears all the matches, including the general
     -- search highlighting.
